@@ -41,3 +41,9 @@ let response = firebase.push(path: "user/john_id", value: updatedUser)
 ```swift
 firebase.delete("user/john_id")
 ```
+
+###### PATCH also available
+
+Refer to https://firebase.google.com/docs/reference/rest/database/ for documentation on the Firebase REST API.
+
+* I AM  NOT AFFILIATED WITH GOOGLE OR FIREBASE IN ANYWAY *
