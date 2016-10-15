@@ -1,5 +1,9 @@
 # firebase-swift
 
+## Swift Package Manager
+```swift 
+.Package(url: "https://github.com/gtchance/FirebaseSwift.git", majorVersion: 1, minor: 0)
+```
 
 ## Example
 ```swift
