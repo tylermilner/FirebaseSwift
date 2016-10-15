@@ -44,9 +44,9 @@ firebase.delete("user/john_id")
 
 ###### PATCH also available
 
-Refer to https://firebase.google.com/docs/reference/rest/database/ for documentation on the Firebase REST API.
+Refer to the following for documentation on the Firebase REST API: https://firebase.google.com/docs/reference/rest/database/
 
-###### I AM  NOT AFFILIATED WITH GOOGLE OR FIREBASE IN ANYWAY
+###### I AM  NOT AFFILIATED WITH GOOGLE OR FIREBASE IN ANY WAY
 
 If you experience any bugs, please create an issue or submit a pull request.
 
