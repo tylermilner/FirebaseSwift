@@ -23,13 +23,19 @@ public class Firebase {
 
     public var auth: String?
 
-    public let baseURI: String
+    public let baseURL: String
 
     public let timeout = 30 // seconds
 
-    public init(baseURI: String = "", auth: String? = nil) {
-        self.baseURI = baseURI
+    public init(baseURL: String = "", auth: String? = nil) {
         self.auth = auth
+
+        var url = baseURL
+        if url.characters.last != Character("/") {
+            url.append(Character("/"))
+        }
+        self.baseURL = url
+
     }
 
 
@@ -80,7 +86,7 @@ public class Firebase {
 
 
     private func completeURLWithPath(path: String)->String {
-        var url = baseURI + "/" + path + ".json"
+        var url = baseURL + path + ".json"
         if let auth = auth {
             url += "?auth=" + auth
         }

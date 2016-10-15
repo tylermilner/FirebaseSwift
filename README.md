@@ -3,7 +3,7 @@
 
 ## Example
 ```swift
-let firebase = Firebase(baseURI: "https://myapp.firebaseio.com", auth: "mytoken")
+let firebase = Firebase(baseURL: "https://myapp.firebaseio.com/", auth: "mytoken")
 ```
 
 
