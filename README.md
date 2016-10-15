@@ -36,3 +36,8 @@ let updatedUser = [
 ]
 let response = firebase.push(path: "user/john_id", value: updatedUser)
 ```
+
+##### DELETE
+```swift
+firebase.delete("user/john_id")
+```
