@@ -3,7 +3,7 @@
 FirebaseSwift is intended for server-side Swift and acts as a wrapper around the Firebase REST api. All calls are synchronous.
 
 ## Swift Package Manager
-```swift 
+```swift
 .Package(url: "https://github.com/gtchance/FirebaseSwift.git", majorVersion: 1, minor: 0)
 ```
 
@@ -42,11 +42,13 @@ let response = firebase.push(path: "user/john_id", value: updatedUser)
 firebase.delete("user/john_id")
 ```
 
-###### PATCH also available
+##### PATCH
+```swift
+let response = firebase.patch(path: "user/john_id/name", value: "John T Smith")
+```
 
 Refer to https://firebase.google.com/docs/reference/rest/database/ for documentation on the Firebase REST API.
 
-###### I AM  NOT AFFILIATED WITH GOOGLE OR FIREBASE IN ANYWAY
+##### I AM  NOT AFFILIATED WITH GOOGLE OR FIREBASE IN ANYWAY
 
 If you experience any bugs, please create an issue or submit a pull request.
-
