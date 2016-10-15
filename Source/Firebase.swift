@@ -27,7 +27,7 @@ public class Firebase {
 
     public let timeout = 30 // seconds
 
-    init(baseURI: String = "", auth: String? = nil) {
+    public init(baseURI: String = "", auth: String? = nil) {
         self.baseURI = baseURI
         self.auth = auth
     }
