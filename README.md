@@ -1,4 +1,6 @@
-# firebase-swift
+# FirebaseSwift
+
+FirebaseSwift is intended for server-side Swift and acts as a wrapper around the Firebase REST api. All calls are synchronous.
 
 ## Swift Package Manager
 ```swift 
