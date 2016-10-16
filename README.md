@@ -1,4 +1,5 @@
 # FirebaseSwift
+[![Build Status](https://api.travis-ci.org/vapor/vapor.svg?branch=master)](https://travis-ci.org/vapor/vapor)
 
 FirebaseSwift is intended for server-side Swift and acts as a wrapper around the Firebase REST api. All calls are synchronous.
 
