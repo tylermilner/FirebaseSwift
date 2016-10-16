@@ -1,8 +1,6 @@
 os:
-  - linux
   - osx
 language: generic
 osx_image: xcode8
-sudo: required
 script:
   - xcodebuild -version
