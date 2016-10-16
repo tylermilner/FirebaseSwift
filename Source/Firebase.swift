@@ -59,10 +59,10 @@ public class Firebase {
     }
 
 
-    public func get(path: String) ->[String: AnyObject]? {
+    public func get(path: String) ->AnyObject? {
 
         let url = completeURLWithPath(path: path)
-        let curl = createCurl(url: url, type: .delete)
+        let curl = createCurl(url: url, type: .get)
 
         let response = curl.performFully()
         let data = Data(response.2)
@@ -70,10 +70,8 @@ public class Firebase {
         curl.close()
 
         do {
-            if let jsonMap = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject] {
+            if let jsonMap = try JSONSerialization.jsonObject(with: data, options: [JSONSerialization.ReadingOptions.allowFragments]) as AnyObject? {
                 return jsonMap
-            } else {
-                print("Firebase response not a valid UTF-8 sequence")
             }
         } catch let e {
             print(e.localizedDescription)
