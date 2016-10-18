@@ -35,7 +35,8 @@ let updatedUser = [
   "name": "John Smith",
   "email": "john_smith@example.com"
 ]
-let response = firebase.push(path: "user/john_id", value: updatedUser)
+// can also use setValue(path: ..., value: ...)
+let response = firebase.put(path: "user/john_id", value: updatedUser) 
 ```
 
 ##### DELETE
@@ -45,7 +46,7 @@ firebase.delete("user/john_id")
 
 ##### PATCH
 ```swift
-let response = firebase.patch(path: "user/john_id/name", value: "John T Smith")
+let response = firebase.patch(path: "user/john_id", value: ["middleInitial: "T"])
 ```
 
 Refer to the following for documentation on the Firebase REST API: https://firebase.google.com/docs/reference/rest/database/
