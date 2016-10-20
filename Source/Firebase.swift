@@ -74,7 +74,12 @@ public class Firebase {
 
         if let data = httpResult.content, httpResult.error == nil {
             do {
-                if let jsonMap = try JSONSerialization.jsonObject(with: data, options: [JSONSerialization.ReadingOptions.allowFragments]) as Any? {
+                if let jsonMap = try JSONSerialization
+                                    .jsonObject(
+                                        with: data,
+                                        options: [JSONSerialization.ReadingOptions.allowFragments])
+                                    as Any? {
+
                     return jsonMap
                 }
             } catch let e {
@@ -119,18 +124,32 @@ public class Firebase {
         let result: HTTPResult?
         switch method {
         case .put:
-            result = Just.put(url, params: params, data: data, json: json, headers: headers, files: files, auth: auth, cookies: cookies, allowRedirects: allowRedirects, timeout: timeout, requestBody: requestBody, URLQuery: urlQuery, asyncProgressHandler: progress, asyncCompletionHandler: completion)
+            result = Just.put(url, params: params, data: data, json: json, headers: headers,
+                              files: files, auth: auth, cookies: cookies, allowRedirects: allowRedirects,
+                              timeout: timeout, requestBody: requestBody, URLQuery: urlQuery,
+                              asyncProgressHandler: progress, asyncCompletionHandler: completion)
         case .post:
-            result = Just.post(url, params: params, data: data, json: json, headers: headers, files: files, auth: auth, cookies: cookies, allowRedirects: allowRedirects, timeout: timeout, requestBody: requestBody, URLQuery: urlQuery, asyncProgressHandler: progress, asyncCompletionHandler: completion)
+            result = Just.post(url, params: params, data: data, json: json, headers: headers,
+                               files: files, auth: auth, cookies: cookies, allowRedirects: allowRedirects,
+                               timeout: timeout, requestBody: requestBody, URLQuery: urlQuery,
+                               asyncProgressHandler: progress, asyncCompletionHandler: completion)
         case .patch:
-            result = Just.patch(url, params: params, data: data, json: json, headers: headers, files: files, auth: auth, cookies: cookies, allowRedirects: allowRedirects, timeout: timeout, requestBody: requestBody, URLQuery: urlQuery, asyncProgressHandler: progress, asyncCompletionHandler: completion)
+            result = Just.patch(url, params: params, data: data, json: json, headers: headers,
+                                files: files, auth: auth, cookies: cookies, allowRedirects: allowRedirects,
+                                timeout: timeout, requestBody: requestBody, URLQuery: urlQuery,
+                                asyncProgressHandler: progress, asyncCompletionHandler: completion)
         default:
             result = nil
         }
 
         do {
             if let data = result?.content,
-                let jsonMap = try JSONSerialization.jsonObject(with: data, options: [JSONSerialization.ReadingOptions.allowFragments]) as? [String: Any] {
+                let jsonMap = try JSONSerialization
+                                  .jsonObject(
+                                      with: data,
+                                      options: [JSONSerialization.ReadingOptions.allowFragments]) 
+                                  as? [String: Any] {
+
                 return jsonMap
             }
         } catch let e {
