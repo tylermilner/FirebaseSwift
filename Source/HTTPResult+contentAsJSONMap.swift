@@ -1,3 +1,12 @@
+//
+//  HTTPResult+contentAsJSONMap.swift
+//  FirebaseSwift
+//
+//  Created by Graham Chance on 10/20/16.
+//
+//
+
+
 import Foundation
 import Just
 
