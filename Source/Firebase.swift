@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 import Just
 
 
@@ -22,10 +21,11 @@ private enum Method: String {
 public class Firebase {
 
     public var auth: String?
-
     public let baseURL: String
-
     public let timeout: Double = 30.0 // seconds
+
+    private let headers = ["Accept": "application/json"]
+
 
     public init(baseURL: String = "", auth: String? = nil) {
         self.auth = auth
@@ -39,57 +39,69 @@ public class Firebase {
     }
 
 
-    public func setValue(path: String, value: Any)->[String: Any]? {
+    public func setValue(path: String, value: Any)->[String: AnyObject]? {
        return put(path: path, value:  value)
     }
 
 
-    public func post(path: String, value: Any)->[String: Any]? {
+    public func post(path: String, value: Any)->[String: AnyObject]? {
         return write(value: value, path: path, method: .post)
     }
 
 
-    public func put(path: String, value: Any)->[String: Any]? {
+    public func put(path: String, value: Any)->[String: AnyObject]? {
         return write(value: value, path: path, method: .put)
     }
 
-    public func patch(path: String, value: Any)->[String: Any]? {
+    public func patch(path: String, value: Any)->[String: AnyObject]? {
         return write(value: value, path: path, method: .patch)
     }
 
 
-    public func delete(path: String) {
+    public func delete(path: String)->[String: AnyObject]? {
         let url = completeURLWithPath(path: path)
-        let result = Just.delete(url)
+
+        let result = Just.delete(url, params: [:], data: [:], json: nil, headers: headers,
+                          files: [:], auth: nil, cookies: [:], allowRedirects: false,
+                          timeout: timeout, URLQuery: nil, requestBody: nil,
+                          asyncProgressHandler: nil, asyncCompletionHandler: nil)
+
         if let error = result.error {
-            print("DELETE Error: " + error.localizedDescription)
+            print("DELETE Error: \(error.localizedDescription)")
+            return nil
         }
+
+        do {
+            if let jsonMap = try result.contentAsJSONMap() as? [String: AnyObject] {
+                return jsonMap
+            }
+        } catch let e {
+            print("DELETE Error: \(e.localizedDescription)")
+        }
+
+        return nil
     }
 
-
-    public func get(path: String) ->Any? {
+    public func get(path: String)->Any? {
 
         let url = completeURLWithPath(path: path)
-        let httpResult = Just.get(url)
 
-        if let data = httpResult.content, httpResult.error == nil {
-            do {
-                if let jsonMap = try JSONSerialization
-                                    .jsonObject(
-                                        with: data,
-                                        options: [JSONSerialization.ReadingOptions.allowFragments])
-                                    as Any? {
+        let httpResult = Just.get(url, params: [:], data: [:], json: nil, headers: headers,
+                          files: [:], auth: nil, allowRedirects: false, cookies: [:],
+                          timeout: timeout, requestBody: nil, URLQuery: nil,
+                          asyncProgressHandler: nil, asyncCompletionHandler: nil)
 
-                    return jsonMap
-                }
-            } catch let e {
-                print("GET Error:" + e.localizedDescription)
+        if let error = httpResult.error {
+            print("GET Error: \(error.localizedDescription)")
+            return nil
+        }
+
+        do {
+            if let jsonMap = try httpResult.contentAsJSONMap() {
+                return jsonMap
             }
-        } else {
-            print("GET request failed.")
-            if let error = httpResult.error {
-                print(error)
-            }
+        } catch let e {
+            print("GET Error: \(e.localizedDescription)")
         }
 
         return nil
@@ -105,51 +117,39 @@ public class Firebase {
     }
 
 
-    private func write(value: Any, path: String, method: Method)->[String: Any]? {
+    private func write(value: Any, path: String, method: Method)->[String: AnyObject]? {
 
         let url = completeURLWithPath(path: path)
-        let params = [String: Any]()
-        let data = [String: Any]()
         let json: Any? = JSONSerialization.isValidJSONObject(value) ? value : [".value": value]
-        let headers = ["Accept": "application/json"]
-        let files = [String: HTTPFile]()
-        let auth: (String, String)? = nil
-        let cookies = [String: String]()
-        let allowRedirects = false
-        let requestBody: Data? = nil
-        let urlQuery: String? = nil
-        let completion: ((HTTPResult)->())? = nil
-        let progress: (TaskProgressHandler)? = nil
 
-        let result: HTTPResult?
+        let result: HTTPResult!
         switch method {
         case .put:
-            result = Just.put(url, params: params, data: data, json: json, headers: headers,
-                              files: files, auth: auth, cookies: cookies, allowRedirects: allowRedirects,
-                              timeout: timeout, requestBody: requestBody, URLQuery: urlQuery,
-                              asyncProgressHandler: progress, asyncCompletionHandler: completion)
+            result = Just.put(url, params: [:], data: [:], json: json, headers: headers,
+                              files: [:], auth: nil, cookies: [:], allowRedirects: false,
+                              timeout: timeout, requestBody: nil, URLQuery: nil,
+                              asyncProgressHandler: nil, asyncCompletionHandler: nil)
         case .post:
-            result = Just.post(url, params: params, data: data, json: json, headers: headers,
-                               files: files, auth: auth, cookies: cookies, allowRedirects: allowRedirects,
-                               timeout: timeout, requestBody: requestBody, URLQuery: urlQuery,
-                               asyncProgressHandler: progress, asyncCompletionHandler: completion)
+            result = Just.post(url, params: [:], data: [:], json: json, headers: headers,
+                               files: [:], auth: nil, cookies: [:], allowRedirects: false,
+                               timeout: timeout, requestBody: nil, URLQuery: nil,
+                               asyncProgressHandler: nil, asyncCompletionHandler: nil)
         case .patch:
-            result = Just.patch(url, params: params, data: data, json: json, headers: headers,
-                                files: files, auth: auth, cookies: cookies, allowRedirects: allowRedirects,
-                                timeout: timeout, requestBody: requestBody, URLQuery: urlQuery,
-                                asyncProgressHandler: progress, asyncCompletionHandler: completion)
+            result = Just.patch(url, params: [:], data: [:], json: json, headers: headers,
+                                files: [:], auth: nil, cookies: [:], allowRedirects: false,
+                                timeout: timeout, requestBody: nil, URLQuery: nil,
+                                asyncProgressHandler: nil, asyncCompletionHandler: nil)
         default:
-            result = nil
+            return nil
+        }
+
+        if let error = result.error {
+            print(method.rawValue + " Error: " + error.localizedDescription)
+            return nil
         }
 
         do {
-            if let data = result?.content,
-                let jsonMap = try JSONSerialization
-                                  .jsonObject(
-                                      with: data,
-                                      options: [JSONSerialization.ReadingOptions.allowFragments]) 
-                                  as? [String: Any] {
-
+            if let jsonMap = try result.contentAsJSONMap() as? [String: AnyObject] {
                 return jsonMap
             }
         } catch let e {
