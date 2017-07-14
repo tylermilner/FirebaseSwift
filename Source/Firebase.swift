@@ -18,6 +18,14 @@ private enum Method: String {
     case put = "PUT"
 }
 
+// The type of all the Just package's methods (get, post, delete,...)
+private typealias JustSendRequestMethodType =
+    (URLComponentsConvertible,[String: Any],[String: Any],
+    Any?, [String: String], [String: HTTPFile], (String, String)?,
+    [String: String], Bool, Double?, String?, Data?,
+    (TaskProgressHandler)?, ((HTTPResult) -> Void)?) -> HTTPResult
+
+
 public class Firebase {
 
     
@@ -188,10 +196,12 @@ public class Firebase {
             }
         }
 
-        let result = Just.delete(url, params: [:], data: [:], json: nil, headers: headers,
-                                 files: [:], auth: nil, cookies: [:], allowRedirects: false,
-                                 timeout: timeout, URLQuery: nil, requestBody: nil,
-                                 asyncProgressHandler: nil, asyncCompletionHandler: completionHandler)
+        let result = performRequest(url,
+                                  method: .delete,
+                                  headers: headers,
+                                  json: nil,
+                                  timeout: timeout,
+                                  complete: completionHandler)
 
         if let error = result.error {
             print("DELETE Error: \(error.localizedDescription)")
@@ -222,10 +232,12 @@ public class Firebase {
             }
         }
 
-        let httpResult = Just.get(url, params: [:], data: [:], json: nil, headers: headers,
-                                  files: [:], auth: nil, allowRedirects: false, cookies: [:],
-                                  timeout: timeout, requestBody: nil, URLQuery: nil,
-                                  asyncProgressHandler: nil, asyncCompletionHandler: completionHandler)
+        let httpResult = performRequest(url,
+                                     method: .get,
+                                     headers: headers,
+                                     json: nil,
+                                     timeout: timeout,
+                                     complete: completionHandler)
 
         guard complete == nil else { return nil }
         return process(httpResult: httpResult, method: .get)
@@ -247,20 +259,26 @@ public class Firebase {
         let result: HTTPResult!
         switch method {
         case .put:
-            result = Just.put(url, params: [:], data: [:], json: json, headers: headers,
-                              files: [:], auth: nil, cookies: [:], allowRedirects: false,
-                              timeout: timeout, requestBody: nil, URLQuery: nil,
-                              asyncProgressHandler: nil, asyncCompletionHandler: completionHandler)
+            result = performRequest(url,
+                                 method: .put,
+                                 headers: headers,
+                                 json: json,
+                                 timeout: timeout,
+                                 complete: completionHandler)
         case .post:
-            result = Just.post(url, params: [:], data: [:], json: json, headers: headers,
-                               files: [:], auth: nil, cookies: [:], allowRedirects: false,
-                               timeout: timeout, requestBody: nil, URLQuery: nil,
-                               asyncProgressHandler: nil, asyncCompletionHandler: completionHandler)
+            result = performRequest(url,
+                                 method: .post,
+                                 headers: headers,
+                                 json: json,
+                                 timeout: timeout,
+                                 complete: completionHandler)
         case .patch:
-            result = Just.patch(url, params: [:], data: [:], json: json, headers: headers,
-                                files: [:], auth: nil, cookies: [:], allowRedirects: false,
-                                timeout: timeout, requestBody: nil, URLQuery: nil,
-                                asyncProgressHandler: nil, asyncCompletionHandler: completionHandler)
+            result = performRequest(url,
+                                 method: .patch,
+                                 headers: headers,
+                                 json: json,
+                                 timeout: timeout,
+                                 complete: completionHandler)
         default:
             return nil
         }
@@ -293,5 +311,33 @@ public class Firebase {
         }
         return nil
     }
+    
+
+    private func performRequest(
+        _ url: URLComponentsConvertible,
+        method: Method,
+        headers: [String: String],
+        json: Any?,
+        timeout: Double?,
+        complete: ((HTTPResult) -> Void)?
+        ) -> HTTPResult {
+        
+        let sendRequest: JustSendRequestMethodType
+        switch method {
+        case .delete:
+            sendRequest = Just.delete
+        case .get:
+            sendRequest = Just.get
+        case .patch:
+            sendRequest = Just.patch
+        case .post:
+            sendRequest = Just.post
+        case .put:
+            sendRequest = Just.put
+        }
+        return sendRequest(url, [:], [:], json, headers, [:], nil, [:],
+                           false, timeout, nil, nil, nil, complete)
+    }
 
 }
+
