@@ -76,6 +76,7 @@ public class Firebase {
     ///   - value: value to set
     ///   - asyncCompletion: Causes the call to be asynchronous. Called on completion with the result.
     /// - Returns: resulting data IF a synchronous call
+    @discardableResult
     public func setValue(path: String,
                          value: Any,
                          asyncCompletion: (([String: AnyObject]?) -> Void)? = nil) -> [String: AnyObject]? {
@@ -89,6 +90,7 @@ public class Firebase {
     ///   - value: value to post
     ///   - asyncCompletion: Causes the post to be asynchronous. Called on completion with the result.
     /// - Returns: resulting data IF a synchronous call
+    @discardableResult
     public func post(path: String,
                      value: Any,
                      asyncCompletion: (([String: AnyObject]?) -> Void)? = nil) -> [String: AnyObject]? {
@@ -102,6 +104,7 @@ public class Firebase {
     ///   - value: value to put
     ///   - asyncCompletion: Causes the put to be asynchronous. Called on completion with the result.
     ///   - Returns: resulting data IF a synchronous call
+    @discardableResult
     public func put(path: String,
                     value: Any,
                     asyncCompletion: (([String: AnyObject]?) -> Void)? = nil) -> [String: AnyObject]? {
@@ -115,6 +118,7 @@ public class Firebase {
     ///   - value: value to patch
     ///   - asyncCompletion: Causes the patch to be asynchronous. Called on completion with the result.
     /// - Returns: resulting data IF a synchronous call
+    @discardableResult
     public func patch(path: String,
                       value: Any,
                       asyncCompletion: (([String: AnyObject]?) -> Void)? = nil) -> [String: AnyObject]? {
@@ -127,6 +131,7 @@ public class Firebase {
     ///   - path: path to append to the base url
     ///   - asyncCompletion: Causes the delete to be asynchronous. Called on completion with the result.
     /// - Returns: deleted data IF a synchronous call
+    @discardableResult
     public func delete(path: String,
                        asyncCompletion: (([String: AnyObject]?) -> Void)? = nil) -> [String: AnyObject]? {
         return delete(path: path, complete: asyncCompletion)
@@ -137,6 +142,7 @@ public class Firebase {
     /// - Parameters:
     ///   - path: path to append to the base url
     ///   - asyncCompletion: Causes the get to be asynchronous. Called on completion with the result.
+    @discardableResult
     public func get(path: String,
                     asyncCompletion: ((Any?) -> Void)? = nil) -> Any? {
         return get(path: path, complete: asyncCompletion)
