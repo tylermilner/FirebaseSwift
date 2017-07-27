@@ -1,5 +1,5 @@
 # FirebaseSwift
-[![Build Status](https://api.travis-ci.org/gtchance/FirebaseSwift.svg?branch=master)](https://travis-ci.org/gtchance/FirebaseSwift) [![codebeat badge](https://codebeat.co/badges/e7704190-f407-4d32-8d96-8854b0040755)](https://codebeat.co/projects/github-com-gtchance-firebaseswift-master) [![Language](https://img.shields.io/badge/language-Swift%203.1-orange.svg)](https://swift.org) ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
+[![Build Status](https://api.travis-ci.org/gtchance/FirebaseSwift.svg?branch=master)](https://travis-ci.org/gtchance/FirebaseSwift) [![Language](https://img.shields.io/badge/language-Swift%203.1-orange.svg)](https://swift.org) ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
 
 FirebaseSwift is intended for server-side Swift and acts as a wrapper around the Firebase REST api. Options for both synchronous and asynchronous calls.
 
