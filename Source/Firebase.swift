@@ -15,6 +15,22 @@ private enum Method: String {
     case get = "GET"
     case patch = "PATCH"
     case put = "PUT"
+
+    fileprivate var justMethod: JustSendRequestMethodType {
+        switch self {
+        case .delete:
+            return Just.delete
+        case .get:
+            return Just.get
+        case .patch:
+            return Just.patch
+        case .post:
+            return Just.post
+        case .put:
+            return Just.put
+        }
+    }
+
 }
 
 // The type of all the Just package's methods (get, post, delete,...)
@@ -178,12 +194,8 @@ public class Firebase {
             }
         }
 
-        let result = performRequest(url,
-                                    method: .delete,
-                                    headers: headers,
-                                    json: nil,
-                                    timeout: timeout,
-                                    complete: completionHandler)
+        let result = Method.delete.justMethod(url, [:], [:], nil, headers, [:], nil, [:],
+                                              false, timeout, nil, nil, nil, completionHandler)
 
         if let error = result.error {
             print("DELETE Error: \(error.localizedDescription)")
@@ -213,12 +225,8 @@ public class Firebase {
             }
         }
 
-        let httpResult = performRequest(url,
-                                        method: .get,
-                                        headers: headers,
-                                        json: nil,
-                                        timeout: timeout,
-                                        complete: completionHandler)
+        let httpResult = Method.get.justMethod(url, [:], [:], nil, headers, [:], nil, [:],
+                                               false, timeout, nil, nil, nil, completionHandler)
 
         guard complete == nil else { return nil }
         return process(httpResult: httpResult, method: .get)
@@ -227,8 +235,7 @@ public class Firebase {
     private func write(value: Any,
                        path: String,
                        method: Method,
-                       complete: (([String: AnyObject]?) -> Void)?
-                       ) -> [String: AnyObject]? {
+                       complete: (([String: AnyObject]?) -> Void)?) -> [String: AnyObject]? {
 
         let url = completeURLWithPath(path: path)
         let json: Any? = JSONSerialization.isValidJSONObject(value) ? value : [".value": value]
@@ -240,12 +247,8 @@ public class Firebase {
             }
         }
 
-        let result = performRequest(url,
-                                    method: method,
-                                    headers: headers,
-                                    json: json,
-                                    timeout: timeout,
-                                    complete: completionHandler)
+        let result = method.justMethod(url, [:], [:], json, headers, [:], nil, [:],
+                                       false, timeout, nil, nil, nil, completionHandler)
 
         guard complete == nil else { return nil }
         return process(httpResult: result, method: method)
@@ -274,32 +277,4 @@ public class Firebase {
         }
         return nil
     }
-
-    // swiftlint:disable:next function_parameter_count
-    private func performRequest(
-        _ url: URLComponentsConvertible,
-        method: Method,
-        headers: [String: String],
-        json: Any?,
-        timeout: Double?,
-        complete: ((HTTPResult) -> Void)?
-        ) -> HTTPResult {
-
-        let sendRequest: JustSendRequestMethodType
-        switch method {
-        case .delete:
-            sendRequest = Just.delete
-        case .get:
-            sendRequest = Just.get
-        case .patch:
-            sendRequest = Just.patch
-        case .post:
-            sendRequest = Just.post
-        case .put:
-            sendRequest = Just.put
-        }
-        return sendRequest(url, [:], [:], json, headers, [:], nil, [:],
-                           false, timeout, nil, nil, nil, complete)
-    }
-
 }
