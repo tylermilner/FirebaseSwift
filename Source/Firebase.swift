@@ -9,7 +9,6 @@
 import Foundation
 import Just
 
-
 private enum Method: String {
     case delete = "DELETE"
     case post = "POST"
@@ -20,28 +19,24 @@ private enum Method: String {
 
 // The type of all the Just package's methods (get, post, delete,...)
 private typealias JustSendRequestMethodType =
-    (URLComponentsConvertible,[String: Any],[String: Any],
+    (URLComponentsConvertible, [String: Any], [String: Any],
     Any?, [String: String], [String: HTTPFile], (String, String)?,
     [String: String], Bool, Double?, String?, Data?,
     (TaskProgressHandler)?, ((HTTPResult) -> Void)?) -> HTTPResult
 
-
 public class Firebase {
 
-    
     /// Auth token
     public var auth: String?
-    
+
     /// Base URL (e.g. http://myapp.firebaseio.com)
     public let baseURL: String
-    
+
     /// Timeout of http operations
     public let timeout: Double = 30.0 // seconds
 
     private let headers = ["Accept": "application/json"]
 
-
-    
     /// Constructor
     ///
     /// - Parameters:
@@ -58,138 +53,125 @@ public class Firebase {
 
     }
 
-    
     /// Performs a synchronous PUT at given path from the base url
     ///
     /// - Parameters:
     ///   - path: path to append to base url
     ///   - value: value to PUT
     /// - Returns: resulting data
-    public func setValue(path: String, value: Any)->[String: AnyObject]? {
+    public func setValue(path: String, value: Any) -> [String: AnyObject]? {
         return put(path: path, value:  value)
     }
 
-    
     /// Performs an asynchronous PUT at base url plus given path
     ///
     /// - Parameters:
     ///   - path: path to append to base url
     ///   - value: value to PUT
     ///   - complete: callback containing resulting data as a parameter
-    public func setValueAsync(path: String, value: Any, complete: @escaping ([String: AnyObject]?)->()) {
+    public func setValueAsync(path: String, value: Any, complete: @escaping ([String: AnyObject]?) -> Void) {
         putAsync(path: path, value:  value, complete: complete)
     }
 
-    
     /// Performs a synchronous POST at given path from the base url
     ///
     /// - Parameters:
     ///   - path: path to append to the base url
     ///   - value: value to post
     /// - Returns: resulting data
-    public func post(path: String, value: Any)->[String: AnyObject]? {
+    public func post(path: String, value: Any) -> [String: AnyObject]? {
         return write(value: value, path: path, method: .post, complete: nil)
     }
 
-    
     /// Performs an asynchronous POST at given path from the base url
     ///
     /// - Parameters:
     ///   - path: path to append to the base url
     ///   - value: value to post
     ///   - complete: callback containing resulting data as a parameter
-    public func postAsync(path: String, value: Any, complete: @escaping ([String: AnyObject]?)->()) {
-        let _ = write(value: value, path: path, method: .post, complete: complete)
+    public func postAsync(path: String, value: Any, complete: @escaping ([String: AnyObject]?) -> Void) {
+        _ = write(value: value, path: path, method: .post, complete: complete)
     }
 
-    
     /// Performs a synchronous PUT at given path from the base url
     ///
     /// - Parameters:
     ///   - path: path to append to the base url
     ///   - value: value to put
     /// - Returns: resulting data
-    public func put(path: String, value: Any)->[String: AnyObject]? {
+    public func put(path: String, value: Any) -> [String: AnyObject]? {
         return write(value: value, path: path, method: .put, complete: nil)
     }
 
-    
     /// Performs an asynchronous PUT at given path from the base url
     ///
     /// - Parameters:
     ///   - path: path to append to the base url
     ///   - value: value to put
     ///   - complete: callback containing resulting data as a parameter
-    public func putAsync(path: String, value: Any, complete: @escaping ([String: AnyObject]?)->()) {
-        let _ = write(value: value, path: path, method: .put, complete: complete)
+    public func putAsync(path: String, value: Any, complete: @escaping ([String: AnyObject]?) -> Void) {
+        _ = write(value: value, path: path, method: .put, complete: complete)
     }
 
-    
     /// Performs a synchronous PATCH at given path from the base url
     ///
     /// - Parameters:
     ///   - path: path to append to the base url
     ///   - value: value to put
     /// - Returns: resulting data
-    public func patch(path: String, value: Any)->[String: AnyObject]? {
+    public func patch(path: String, value: Any) -> [String: AnyObject]? {
         return write(value: value, path: path, method: .patch, complete: nil)
     }
 
-    
     /// Performs an asynchronous PATCH at given path from the base url
     ///
     /// - Parameters:
     ///   - path: path to append to the base url
     ///   - value: value to put
     ///   - complete: callback containing resulting data as a parameter
-    public func patchAsync(path: String, value: Any, complete: @escaping ([String: AnyObject]?)->()) {
-        let _ = write(value: value, path: path, method: .patch, complete: complete)
+    public func patchAsync(path: String, value: Any, complete: @escaping ([String: AnyObject]?) -> Void) {
+        _ = write(value: value, path: path, method: .patch, complete: complete)
     }
 
-    
     /// Performs a synchronous DELETE at given path from the base url
     ///
     /// - Parameter path: path to append to the base url
     /// - Returns: deleted data
-    public func delete(path: String)->[String: AnyObject]? {
+    public func delete(path: String) -> [String: AnyObject]? {
         return delete(path: path, complete: nil)
     }
 
-    
     /// Performs an asynchronous DELETE at given path from the base url
     ///
     /// - Parameters:
-    ///   - path: <#path description#>
+    ///   - path: path to append to the base url
     ///   - complete: callback containing deleted data as a parameter
-    public func deleteAsync(path: String, complete: @escaping ([String: AnyObject]?)->()) {
-        let _ = delete(path: path, complete: complete)
+    public func deleteAsync(path: String, complete: @escaping ([String: AnyObject]?) -> Void) {
+        _ = delete(path: path, complete: complete)
     }
 
-    
     /// Performs a synchronous GET at given path from the base url
     ///
     /// - Parameter path: path to append to the base url
     /// - Returns: data at the path location
-    public func get(path: String)->Any? {
+    public func get(path: String) ->Any? {
         return get(path: path, complete: nil)
     }
 
-    
     /// Performs an asynchronous GET at given path from the base url
     ///
     /// - Parameters:
     ///   - path: path to append to the base url
     ///   - complete: callback containing the resulting data as a parameter
-    public func getAsync(path: String, complete: @escaping (Any?)->()) {
-        let _ = get(path: path, complete: complete)
+    public func getAsync(path: String, complete: @escaping (Any?) -> Void) {
+        _ = get(path: path, complete: complete)
     }
 
-
-    private func delete(path: String, complete: (([String: AnyObject]?)->())?)->[String: AnyObject]? {
+    private func delete(path: String, complete: (([String: AnyObject]?) -> Void)?) -> [String: AnyObject]? {
 
         let url = completeURLWithPath(path: path)
 
-        var completionHandler: ((HTTPResult)->())? = nil
+        var completionHandler: ((HTTPResult) -> Void)? = nil
         if let complete = complete {
             completionHandler = { result in
                 complete(self.process(httpResult: result, method: .delete))
@@ -197,11 +179,11 @@ public class Firebase {
         }
 
         let result = performRequest(url,
-                                  method: .delete,
-                                  headers: headers,
-                                  json: nil,
-                                  timeout: timeout,
-                                  complete: completionHandler)
+                                    method: .delete,
+                                    headers: headers,
+                                    json: nil,
+                                    timeout: timeout,
+                                    complete: completionHandler)
 
         if let error = result.error {
             print("DELETE Error: \(error.localizedDescription)")
@@ -220,12 +202,11 @@ public class Firebase {
         return process(httpResult: result, method: .delete)
     }
 
-
-    private func get(path: String, complete: ((Any?)->())?)->Any? {
+    private func get(path: String, complete: ((Any?) -> Void)?) -> Any? {
 
         let url = completeURLWithPath(path: path)
 
-        var completionHandler: ((HTTPResult)->())? = nil
+        var completionHandler: ((HTTPResult) -> Void)? = nil
         if let complete = complete {
             completionHandler = { result in
                 complete(self.process(httpResult: result, method: .get))
@@ -233,62 +214,44 @@ public class Firebase {
         }
 
         let httpResult = performRequest(url,
-                                     method: .get,
-                                     headers: headers,
-                                     json: nil,
-                                     timeout: timeout,
-                                     complete: completionHandler)
+                                        method: .get,
+                                        headers: headers,
+                                        json: nil,
+                                        timeout: timeout,
+                                        complete: completionHandler)
 
         guard complete == nil else { return nil }
         return process(httpResult: httpResult, method: .get)
     }
 
-
-    private func write(value: Any, path: String, method: Method, complete: (([String: AnyObject]?)->())?)->[String: AnyObject]? {
+    private func write(value: Any,
+                       path: String,
+                       method: Method,
+                       complete: (([String: AnyObject]?) -> Void)?
+                       ) -> [String: AnyObject]? {
 
         let url = completeURLWithPath(path: path)
         let json: Any? = JSONSerialization.isValidJSONObject(value) ? value : [".value": value]
 
-        var completionHandler: ((HTTPResult)->())? = nil
+        var completionHandler: ((HTTPResult) -> Void)? = nil
         if let complete = complete {
             completionHandler = { result in
                 complete(self.process(httpResult: result, method: method))
             }
         }
 
-        let result: HTTPResult!
-        switch method {
-        case .put:
-            result = performRequest(url,
-                                 method: .put,
-                                 headers: headers,
-                                 json: json,
-                                 timeout: timeout,
-                                 complete: completionHandler)
-        case .post:
-            result = performRequest(url,
-                                 method: .post,
-                                 headers: headers,
-                                 json: json,
-                                 timeout: timeout,
-                                 complete: completionHandler)
-        case .patch:
-            result = performRequest(url,
-                                 method: .patch,
-                                 headers: headers,
-                                 json: json,
-                                 timeout: timeout,
-                                 complete: completionHandler)
-        default:
-            return nil
-        }
+        let result = performRequest(url,
+                                    method: method,
+                                    headers: headers,
+                                    json: json,
+                                    timeout: timeout,
+                                    complete: completionHandler)
 
         guard complete == nil else { return nil }
         return process(httpResult: result, method: method)
     }
 
-
-    private func completeURLWithPath(path: String)->String {
+    private func completeURLWithPath(path: String) -> String {
         var url = baseURL + path + ".json"
         if let auth = auth {
             url += "?auth=" + auth
@@ -296,7 +259,7 @@ public class Firebase {
         return url
     }
 
-    private func process(httpResult: HTTPResult, method: Method)->[String: AnyObject]? {
+    private func process(httpResult: HTTPResult, method: Method) -> [String: AnyObject]? {
         if let error = httpResult.error {
             print(method.rawValue + " Error: " + error.localizedDescription)
             return nil
@@ -311,8 +274,8 @@ public class Firebase {
         }
         return nil
     }
-    
 
+    // swiftlint:disable:next function_parameter_count
     private func performRequest(
         _ url: URLComponentsConvertible,
         method: Method,
@@ -321,7 +284,7 @@ public class Firebase {
         timeout: Double?,
         complete: ((HTTPResult) -> Void)?
         ) -> HTTPResult {
-        
+
         let sendRequest: JustSendRequestMethodType
         switch method {
         case .delete:
@@ -340,4 +303,3 @@ public class Firebase {
     }
 
 }
-
