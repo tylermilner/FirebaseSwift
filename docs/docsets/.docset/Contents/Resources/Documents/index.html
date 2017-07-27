@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html"> Docs</a> (90% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html"> Reference</a>
+        <img id="carat" src="img/carat.png" />
+          Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/Firebase.html">Firebase</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <h1 id='firebaseswift' class='heading'>FirebaseSwift</h1>
+
+<p><a href="https://travis-ci.org/gtchance/FirebaseSwift"><img src="https://api.travis-ci.org/gtchance/FirebaseSwift.svg?branch=master" alt="Build Status"></a> <a href="https://codebeat.co/projects/github-com-gtchance-firebaseswift-master"><img src="https://codebeat.co/badges/e7704190-f407-4d32-8d96-8854b0040755" alt="codebeat badge"></a> <a href="https://swift.org"><img src="https://img.shields.io/badge/language-Swift%203.1-orange.svg" alt="Language"></a> <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license"></p>
+
+<p>FirebaseSwift is intended for server-side Swift and acts as a wrapper around the Firebase REST api. Options for both synchronous and asynchronous calls.</p>
+<h2 id='swift-package-manager' class='heading'>Swift Package Manager</h2>
+<pre class="highlight swift"><code><span class="o">.</span><span class="kt">Package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/gtchance/FirebaseSwift.git"</span><span class="p">,</span> <span class="nv">majorVersion</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">minor</span><span class="p">:</span> <span class="mi">3</span><span class="p">)</span>
+</code></pre>
+<h2 id='example' class='heading'>Example</h2>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">firebase</span> <span class="o">=</span> <span class="kt">Firebase</span><span class="p">(</span><span class="nv">baseURL</span><span class="p">:</span> <span class="s">"https://myapp.firebaseio.com/"</span><span class="p">,</span> <span class="nv">auth</span><span class="p">:</span> <span class="s">"mytoken"</span><span class="p">)</span>
+</code></pre>
+<h5 id='get' class='heading'>GET</h5>
+<pre class="highlight swift"><code><span class="c1">// sync</span>
+<span class="k">let</span> <span class="nv">user</span> <span class="o">=</span> <span class="n">firebase</span><span class="o">.</span><span class="nf">get</span><span class="p">(</span><span class="s">"user"</span><span class="p">)</span>
+
+<span class="c1">// async</span>
+<span class="n">firebase</span><span class="o">.</span><span class="nf">get</span><span class="p">(</span><span class="s">"user"</span><span class="p">)</span> <span class="p">{</span> <span class="n">user</span> <span class="k">in</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre>
+<h5 id='push' class='heading'>PUSH</h5>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">newUser</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s">"name"</span><span class="p">:</span> <span class="s">"John"</span><span class="p">,</span>
+  <span class="s">"email"</span><span class="p">:</span> <span class="s">"john@example.com"</span>
+<span class="p">]</span>
+<span class="c1">// sync</span>
+<span class="k">let</span> <span class="nv">response</span> <span class="o">=</span> <span class="n">firebase</span><span class="o">.</span><span class="nf">push</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="s">"user"</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="n">newUser</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span> <span class="c1">// ["name": "john_id"]</span>
+
+<span class="c1">// async</span>
+<span class="n">firebase</span><span class="o">.</span><span class="nf">push</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="s">"user"</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="n">newUser</span><span class="p">)</span> <span class="p">{</span> <span class="n">response</span> <span class="k">in</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre>
+<h5 id='put' class='heading'>PUT</h5>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">updatedUser</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s">"name"</span><span class="p">:</span> <span class="s">"John Smith"</span><span class="p">,</span>
+  <span class="s">"email"</span><span class="p">:</span> <span class="s">"john_smith@example.com"</span>
+<span class="p">]</span>
+<span class="c1">// can also use setValue(path: ..., value: ...)</span>
+<span class="c1">// sync</span>
+<span class="k">let</span> <span class="nv">response</span> <span class="o">=</span> <span class="n">firebase</span><span class="o">.</span><span class="nf">put</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="s">"user/john_id"</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="n">updatedUser</span><span class="p">)</span>
+
+<span class="c1">// async</span>
+<span class="n">firebase</span><span class="o">.</span><span class="nf">put</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="s">"user/john_id"</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="n">updatedUser</span><span class="p">)</span> <span class="p">{</span> <span class="n">response</span> <span class="k">in</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre>
+<h5 id='delete' class='heading'>DELETE</h5>
+<pre class="highlight swift"><code><span class="c1">// sync</span>
+<span class="k">let</span> <span class="nv">deleted</span> <span class="o">=</span> <span class="n">firebase</span><span class="o">.</span><span class="nf">delete</span><span class="p">(</span><span class="s">"user/john_id"</span><span class="p">)</span>
+
+<span class="c1">// async</span>
+<span class="n">firebase</span><span class="o">.</span><span class="nf">delete</span><span class="p">(</span><span class="s">"user/john_id"</span><span class="p">)</span> <span class="p">{</span> <span class="n">deleted</span> <span class="k">in</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre>
+<h5 id='patch' class='heading'>PATCH</h5>
+<pre class="highlight swift"><code><span class="c1">// sync</span>
+<span class="k">let</span> <span class="nv">response</span> <span class="o">=</span> <span class="n">firebase</span><span class="o">.</span><span class="nf">patch</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="s">"user/john_id"</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="p">[</span><span class="s">"middleInitial: "</span><span class="kt">T</span><span class="s">"])
+
+// async
+firebase.patch(path: "</span><span class="n">user</span><span class="o">/</span><span class="n">john_id</span><span class="s">", value: ["</span><span class="nv">middleInitial</span><span class="p">:</span> <span class="s">"T"</span><span class="p">])</span> <span class="p">{</span> <span class="n">response</span> <span class="k">in</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Refer to the following for documentation on the Firebase REST API: <a href="https://firebase.google.com/docs/reference/rest/database/">https://firebase.google.com/docs/reference/rest/database/</a></p>
+<h5 id='i-am-not-affiliated-with-google-or-firebase-in-any-way' class='heading'>I AM  NOT AFFILIATED WITH GOOGLE OR FIREBASE IN ANY WAY</h5>
+
+<p>If you experience any bugs, please create an issue or submit a pull request.</p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2017 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2017-07-26)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

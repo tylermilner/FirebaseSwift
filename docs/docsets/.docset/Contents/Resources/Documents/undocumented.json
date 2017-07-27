@@ -1,0 +1,12 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/graham/Projects/firebase-swift/Source/Firebase.swift",
+      "line": 45,
+      "symbol": "Firebase",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/graham/Projects/firebase-swift"
+}

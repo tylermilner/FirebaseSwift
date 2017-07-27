@@ -11,6 +11,11 @@ import Just
 
 extension HTTPResult {
 
+
+    /// Converts an HTTPResult to json
+    ///
+    /// - Returns: A json object
+    /// - Throws: JSONSerialization error
     func contentAsJSONMap() throws ->Any? {
         if let data = content {
             if let jsonMap = try JSONSerialization

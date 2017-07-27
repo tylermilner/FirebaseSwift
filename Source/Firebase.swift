@@ -41,6 +41,7 @@ private typealias JustSendRequestMethodType =
 
 private typealias FBSCallback = (Any?) -> Void
 
+/// This class models an object that can send requests to Firebase, such as POST, GET and DELETE.
 public class Firebase {
 
     /// Auth token
@@ -50,7 +51,7 @@ public class Firebase {
     public let baseURL: String
 
     /// Timeout of http operations
-    public let timeout: Double = 30.0 // seconds
+    public var timeout: Double = 30.0 // seconds
 
     private let headers = ["Accept": "application/json"]
 
@@ -69,10 +70,10 @@ public class Firebase {
         self.baseURL = url
     }
 
-    /// Performs a PUT at base url plus given path
+    /// Performs a PUT at base url plus given path.
     ///
     /// - Parameters:
-    ///   - path: path to append to base url
+    ///   - path: path to append to base url.
     ///   - value: value to set
     ///   - asyncCompletion: Causes the call to be asynchronous. Called on completion with the result.
     /// - Returns: resulting data IF a synchronous call
@@ -83,7 +84,7 @@ public class Firebase {
         return put(path: path, value:  value, asyncCompletion: asyncCompletion)
     }
 
-    /// Performs a POST at given path from the base url
+    /// Performs a POST at given path from the base url.
     ///
     /// - Parameters:
     ///   - path: path to append to the base url
@@ -97,13 +98,13 @@ public class Firebase {
         return write(value: value, path: path, method: .post, complete: asyncCompletion)
     }
 
-    /// Performs an asynchronous PUT at given path from the base url
+    /// Performs an asynchronous PUT at given path from the base url.
     ///
     /// - Parameters:
     ///   - path: path to append to the base url
     ///   - value: value to put
     ///   - asyncCompletion: Causes the put to be asynchronous. Called on completion with the result.
-    ///   - Returns: resulting data IF a synchronous call
+    /// - Returns: resulting data IF a synchronous call
     @discardableResult
     public func put(path: String,
                     value: Any,
@@ -111,7 +112,7 @@ public class Firebase {
         return write(value: value, path: path, method: .put, complete: asyncCompletion)
     }
 
-    /// Performs a PATCH at given path from the base url
+    /// Performs a PATCH at given path from the base url.
     ///
     /// - Parameters:
     ///   - path: path to append to the base url
@@ -125,7 +126,7 @@ public class Firebase {
         return write(value: value, path: path, method: .patch, complete: asyncCompletion)
     }
 
-    /// Performs a DELETE at given path from the base url
+    /// Performs a DELETE at given path from the base url.
     ///
     /// - Parameters:
     ///   - path: path to append to the base url
@@ -137,11 +138,12 @@ public class Firebase {
         return delete(path: path, complete: asyncCompletion)
     }
 
-    /// Performs an asynchronous GET at given path from the base url
+    /// Performs an asynchronous GET at given path from the base url.
     ///
     /// - Parameters:
     ///   - path: path to append to the base url
     ///   - asyncCompletion: Causes the get to be asynchronous. Called on completion with the result.
+    /// - Returns: resulting data IF a synchronous call
     @discardableResult
     public func get(path: String,
                     asyncCompletion: ((Any?) -> Void)? = nil) -> Any? {
