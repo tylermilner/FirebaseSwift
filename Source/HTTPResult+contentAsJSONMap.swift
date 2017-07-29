@@ -11,7 +11,6 @@ import Just
 
 extension HTTPResult {
 
-
     /// Converts an HTTPResult to json
     ///
     /// - Returns: A json object

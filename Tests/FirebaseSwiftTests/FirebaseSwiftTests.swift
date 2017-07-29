@@ -15,11 +15,10 @@ class FirebaseTests: XCTestCase {
 
     var url: String!
     var key: String!
-    var fb: Firebase!
+    var firebase: Firebase!
 
     let fakeUser = ["id": "123abc"]
     let patchValue = ["id": "xyz"]
-
 
     override func setUp() {
         super.setUp()
@@ -27,23 +26,23 @@ class FirebaseTests: XCTestCase {
         print("dict \(dict)")
         url = dict["fb_url"]
         key = dict["fb_secret"]
-        fb = Firebase(baseURL: url, auth: key)
-        fb.delete(path: "")
+        firebase = Firebase(baseURL: url, auth: key)
+        firebase.delete(path: "")
     }
 
     override func tearDown() {
         super.tearDown()
-        fb.delete(path: "")
+        firebase.delete(path: "")
     }
 
     func testPostSync() {
-        let result = fb.post(path: "users", value: fakeUser)
+        let result = firebase.post(path: "users", value: fakeUser)
         processPostOrPutResponse(result)
     }
 
     func testPostAsync() {
         let postExpectation = self.expectation(description: "post")
-        fb.post(path: "users", value: fakeUser) { result in
+        firebase.post(path: "users", value: fakeUser) { result in
             postExpectation.fulfill()
             self.processPostOrPutResponse(result)
         }
@@ -53,16 +52,16 @@ class FirebaseTests: XCTestCase {
     }
 
     func testGetSync() {
-        let result = fb.post(path: "users", value: fakeUser)
+        let result = firebase.post(path: "users", value: fakeUser)
         let id = processPostOrPutResponse(result)
-        processGetResponse(fb.get(path: "users/" + id!))
+        processGetResponse(firebase.get(path: "users/" + id!))
     }
 
     func testGetAsync() {
-        let result = fb.post(path: "users", value: fakeUser)
+        let result = firebase.post(path: "users", value: fakeUser)
         let id = processPostOrPutResponse(result)
         let getExpectation = self.expectation(description: "get")
-        self.fb.get(path: "users/" + id!) { result in
+        self.firebase.get(path: "users/" + id!) { result in
             getExpectation.fulfill()
             self.processGetResponse(result)
         }
@@ -72,7 +71,7 @@ class FirebaseTests: XCTestCase {
     }
 
     func testPutSync() {
-        let result = fb.post(path: "users", value: fakeUser)
+        let result = firebase.post(path: "users", value: fakeUser)
         XCTAssertNotNil(result)
         let id = result?["name"] as? String
         XCTAssertNotNil(id)
@@ -80,7 +79,7 @@ class FirebaseTests: XCTestCase {
 
     func testPutAsync() {
         let putExpectation = self.expectation(description: "put")
-        fb.post(path: "users", value: fakeUser) { result in
+        firebase.post(path: "users", value: fakeUser) { result in
             putExpectation.fulfill()
             self.processPostOrPutResponse(result)
         }
@@ -90,13 +89,13 @@ class FirebaseTests: XCTestCase {
     }
 
     func testPatchSync() {
-        let result = fb.patch(path: "users", value: patchValue)
+        let result = firebase.patch(path: "users", value: patchValue)
         processPatchResponse(result)
     }
 
     func testPatchAsync() {
         let patchExpectation = self.expectation(description: "patch")
-        fb.patch(path: "users", value: patchValue) { result in
+        firebase.patch(path: "users", value: patchValue) { result in
             patchExpectation.fulfill()
             self.processPatchResponse(result)
         }
@@ -106,20 +105,21 @@ class FirebaseTests: XCTestCase {
     }
 
     func testDeleteSync() {
-        let result = fb.post(path: "users", value: fakeUser)
+        let result = firebase.post(path: "users", value: fakeUser)
         processPostOrPutResponse(result)
-        let deleteResult = fb.delete(path: "users/" + name!)
-        XCTAssertNil(deleteResult)
+        firebase.delete(path: "users")
+        let getResult = firebase.get(path: "users")
+        XCTAssertNil(getResult)
     }
 
-
     func testDeleteAsync() {
-        let result = fb.post(path: "users", value: fakeUser)
+        let result = firebase.post(path: "users", value: fakeUser)
         processPostOrPutResponse(result)
         let deleteExpectation = self.expectation(description: "delete")
-        fb.delete(path: "users/" + name!) { result in
+        firebase.delete(path: "users") {
             deleteExpectation.fulfill()
-            XCTAssertNil(result)
+            let getResult = self.firebase.get(path: "users")
+            XCTAssertNil(getResult)
         }
         self.waitForExpectations(timeout: 30) { error in
             XCTAssertNil(error, "Post/Delete Timed Out")
@@ -127,7 +127,7 @@ class FirebaseTests: XCTestCase {
     }
 
     @discardableResult
-    func processPostOrPutResponse(_ result: [String: AnyObject]?)->String? {
+    private func processPostOrPutResponse(_ result: [String: AnyObject]?) -> String? {
         XCTAssertNotNil(result)
         let id = result?["name"] as? String
         XCTAssertNotNil(id)
@@ -147,4 +147,3 @@ class FirebaseTests: XCTestCase {
     }
 
 }
-
