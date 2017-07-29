@@ -25,18 +25,18 @@ firebase.get("user") { user in
 }
 ```
 
-##### PUSH
+##### POST
 ```swift
 let newUser = [
   "name": "John",
   "email": "john@example.com"
 ]
 // sync
-let response = firebase.push(path: "user", value: newUser)
-print(response) // ["name": "john_id"]
+let result = firebase.post(path: "user", value: newUser)
+print(result) // ["name": "john_id"]
 
 // async
-firebase.push(path: "user", value: newUser) { response in
+firebase.post(path: "user", value: newUser) { result in
   // ...
 }
 ```
@@ -52,7 +52,7 @@ let updatedUser = [
 let response = firebase.put(path: "user/john_id", value: updatedUser)
 
 // async
-firebase.put(path: "user/john_id", value: updatedUser) { response in
+firebase.put(path: "user/john_id", value: updatedUser) { result in
   // ...
 }
 ```
@@ -60,10 +60,10 @@ firebase.put(path: "user/john_id", value: updatedUser) { response in
 ##### DELETE
 ```swift
 // sync
-let deleted = firebase.delete("user/john_id")
+firebase.delete("user/john_id")
 
 // async
-firebase.delete("user/john_id") { deleted in
+firebase.delete("user/john_id") {
   // ...
 }
 ```
@@ -71,10 +71,10 @@ firebase.delete("user/john_id") { deleted in
 ##### PATCH
 ```swift
 // sync
-let response = firebase.patch(path: "user/john_id", value: ["middleInitial: "T"])
+let result = firebase.patch(path: "user/john_id", value: ["middleInitial: "T"])
 
 // async
-firebase.patch(path: "user/john_id", value: ["middleInitial: "T"]) { response in
+firebase.patch(path: "user/john_id", value: ["middleInitial: "T"]) { result in
   // ...
 }
 ```
