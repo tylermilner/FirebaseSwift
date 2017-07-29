@@ -61,17 +61,17 @@
   <span class="c1">// ...</span>
 <span class="p">}</span>
 </code></pre>
-<h5 id='push' class='heading'>PUSH</h5>
+<h5 id='post' class='heading'>POST</h5>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">newUser</span> <span class="o">=</span> <span class="p">[</span>
   <span class="s">"name"</span><span class="p">:</span> <span class="s">"John"</span><span class="p">,</span>
   <span class="s">"email"</span><span class="p">:</span> <span class="s">"john@example.com"</span>
 <span class="p">]</span>
 <span class="c1">// sync</span>
-<span class="k">let</span> <span class="nv">response</span> <span class="o">=</span> <span class="n">firebase</span><span class="o">.</span><span class="nf">push</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="s">"user"</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="n">newUser</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span> <span class="c1">// ["name": "john_id"]</span>
+<span class="k">let</span> <span class="nv">result</span> <span class="o">=</span> <span class="n">firebase</span><span class="o">.</span><span class="nf">post</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="s">"user"</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="n">newUser</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="c1">// ["name": "john_id"]</span>
 
 <span class="c1">// async</span>
-<span class="n">firebase</span><span class="o">.</span><span class="nf">push</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="s">"user"</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="n">newUser</span><span class="p">)</span> <span class="p">{</span> <span class="n">response</span> <span class="k">in</span>
+<span class="n">firebase</span><span class="o">.</span><span class="nf">post</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="s">"user"</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="n">newUser</span><span class="p">)</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
   <span class="c1">// ...</span>
 <span class="p">}</span>
 </code></pre>
@@ -85,25 +85,25 @@
 <span class="k">let</span> <span class="nv">response</span> <span class="o">=</span> <span class="n">firebase</span><span class="o">.</span><span class="nf">put</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="s">"user/john_id"</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="n">updatedUser</span><span class="p">)</span>
 
 <span class="c1">// async</span>
-<span class="n">firebase</span><span class="o">.</span><span class="nf">put</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="s">"user/john_id"</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="n">updatedUser</span><span class="p">)</span> <span class="p">{</span> <span class="n">response</span> <span class="k">in</span>
+<span class="n">firebase</span><span class="o">.</span><span class="nf">put</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="s">"user/john_id"</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="n">updatedUser</span><span class="p">)</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
   <span class="c1">// ...</span>
 <span class="p">}</span>
 </code></pre>
 <h5 id='delete' class='heading'>DELETE</h5>
 <pre class="highlight swift"><code><span class="c1">// sync</span>
-<span class="k">let</span> <span class="nv">deleted</span> <span class="o">=</span> <span class="n">firebase</span><span class="o">.</span><span class="nf">delete</span><span class="p">(</span><span class="s">"user/john_id"</span><span class="p">)</span>
+<span class="n">firebase</span><span class="o">.</span><span class="nf">delete</span><span class="p">(</span><span class="s">"user/john_id"</span><span class="p">)</span>
 
 <span class="c1">// async</span>
-<span class="n">firebase</span><span class="o">.</span><span class="nf">delete</span><span class="p">(</span><span class="s">"user/john_id"</span><span class="p">)</span> <span class="p">{</span> <span class="n">deleted</span> <span class="k">in</span>
+<span class="n">firebase</span><span class="o">.</span><span class="nf">delete</span><span class="p">(</span><span class="s">"user/john_id"</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// ...</span>
 <span class="p">}</span>
 </code></pre>
 <h5 id='patch' class='heading'>PATCH</h5>
 <pre class="highlight swift"><code><span class="c1">// sync</span>
-<span class="k">let</span> <span class="nv">response</span> <span class="o">=</span> <span class="n">firebase</span><span class="o">.</span><span class="nf">patch</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="s">"user/john_id"</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="p">[</span><span class="s">"middleInitial: "</span><span class="kt">T</span><span class="s">"])
+<span class="k">let</span> <span class="nv">result</span> <span class="o">=</span> <span class="n">firebase</span><span class="o">.</span><span class="nf">patch</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="s">"user/john_id"</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="p">[</span><span class="s">"middleInitial: "</span><span class="kt">T</span><span class="s">"])
 
 // async
-firebase.patch(path: "</span><span class="n">user</span><span class="o">/</span><span class="n">john_id</span><span class="s">", value: ["</span><span class="nv">middleInitial</span><span class="p">:</span> <span class="s">"T"</span><span class="p">])</span> <span class="p">{</span> <span class="n">response</span> <span class="k">in</span>
+firebase.patch(path: "</span><span class="n">user</span><span class="o">/</span><span class="n">john_id</span><span class="s">", value: ["</span><span class="nv">middleInitial</span><span class="p">:</span> <span class="s">"T"</span><span class="p">])</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
   <span class="c1">// ...</span>
 <span class="p">}</span>
 </code></pre>
