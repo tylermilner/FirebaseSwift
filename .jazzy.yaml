@@ -1,0 +1,7 @@
+readme: README.md
+author: Graham\ Chance
+github_url: https://github.com/gtchance/firebaseswift
+module: FirebaseSwift
+exclude:
+  - Tests/*
+  - Dependencies/*
