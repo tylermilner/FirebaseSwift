@@ -8,6 +8,7 @@ FirebaseSwift is intended for server-side Swift and acts as a wrapper around the
 .Package(url: "https://github.com/gtchance/FirebaseSwift.git", majorVersion: 1, minor: 4)
 ```
 
+
 ## Example
 ```swift
 let firebase = Firebase(baseURL: "https://myapp.firebaseio.com/", auth: "mytoken")
@@ -79,7 +80,9 @@ firebase.patch(path: "user/john_id", value: ["middleInitial: "T"]) { result in
 }
 ```
 
-Refer to the following for documentation on the Firebase REST API: https://firebase.google.com/docs/reference/rest/database/
+* [FirebaseSwift Documentation](https://gtchance.github.io/FirebaseSwift/Classes/Firebase.html)
+
+* [Firebase REST API Documentation](https://firebase.google.com/docs/reference/rest/database/)
 
 ##### I AM  NOT AFFILIATED WITH GOOGLE OR FIREBASE IN ANY WAY
 
