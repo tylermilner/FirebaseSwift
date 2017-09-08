@@ -42,7 +42,7 @@ private typealias JustSendRequestMethodType =
 private typealias FBSCallback = (Any?) -> Void
 
 /// This class models an object that can send requests to Firebase, such as POST, GET PATCH and DELETE.
-public class Firebase {
+public final class Firebase {
 
     /// Database auth token
     public var auth: String?
@@ -158,14 +158,13 @@ public class Firebase {
         write(value: value, path: path, method: .patch, complete: asyncCompletion)
     }
 
-    
     /// Performs a synchronous DELETE at given path from the base url.
     ///
     /// - Parameter path: path to append to the base url
     public func delete(path: String) {
         let url = completeURLWithPath(path: path)
         _ = Method.delete.justMethod(url, [:], [:], nil, headers, [:], nil, [:],
-                                         false, timeout, nil, nil, nil, nil)
+                                     false, timeout, nil, nil, nil, nil)
     }
 
     /// Performs an asynchronous DELETE at given path from the base url.
@@ -177,8 +176,8 @@ public class Firebase {
                        asyncCompletion: @escaping () -> Void) {
         let url = completeURLWithPath(path: path)
         _ = Method.delete.justMethod(url, [:], [:], nil, headers, [:], nil, [:],
-                                         false, timeout, nil, nil, nil) { _ in
-                                            asyncCompletion()
+                                     false, timeout, nil, nil, nil) { _ in
+                                        asyncCompletion()
         }
     }
 
@@ -223,12 +222,15 @@ public class Firebase {
         let url = completeURLWithPath(path: path)
         let json: Any? = JSONSerialization.isValidJSONObject(value) ? value : [".value": value]
 
-        let completionHandler = createCompletionHandler(method: method, callback: complete)
+        let callback: ((Any?) -> Void)? = complete == nil ? nil : { result in
+            complete?(result as? [String: AnyObject])
+        }
+        let completionHandler = createCompletionHandler(method: method, callback: callback)
         let result = method.justMethod(url, [:], [:], json, headers, [:], nil, [:],
                                        false, timeout, nil, nil, nil, completionHandler)
 
         guard complete == nil else { return nil }
-        return process(httpResult: result, method: method)
+        return process(httpResult: result, method: method) as? [String : AnyObject]
     }
 
     private func completeURLWithPath(path: String) -> String {
@@ -239,15 +241,15 @@ public class Firebase {
         return url
     }
 
-    private func process(httpResult: HTTPResult, method: Method) -> [String: AnyObject]? {
+    private func process(httpResult: HTTPResult, method: Method) -> Any? {
         if let error = httpResult.error {
             print(method.rawValue + " Error: " + error.localizedDescription)
             return nil
         }
 
         do {
-            if let jsonMap = try httpResult.contentAsJSONMap() as? [String: AnyObject] {
-                return jsonMap
+            if let json = try httpResult.contentAsJSONMap() {
+                return json
             }
         } catch let e {
             print(method.rawValue + " Error: " + e.localizedDescription)
@@ -256,7 +258,7 @@ public class Firebase {
     }
 
     private func createCompletionHandler(method: Method,
-                                         callback: (([String: AnyObject]?) -> Void)?) -> ((HTTPResult) -> Void)? {
+                                         callback: ((Any?) -> Void)?) -> ((HTTPResult) -> Void)? {
         if let callback = callback {
             let completionHandler: ((HTTPResult) -> Void)? = { result in
                 callback(self.process(httpResult: result, method: method))
