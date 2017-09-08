@@ -222,12 +222,15 @@ public final class Firebase {
         let url = completeURLWithPath(path: path)
         let json: Any? = JSONSerialization.isValidJSONObject(value) ? value : [".value": value]
 
-        let completionHandler = createCompletionHandler(method: method, callback: complete)
+        let callback: ((Any?) -> Void)? = complete == nil ? nil : { result in
+            complete?(result as? [String: AnyObject])
+        }
+        let completionHandler = createCompletionHandler(method: method, callback: callback)
         let result = method.justMethod(url, [:], [:], json, headers, [:], nil, [:],
                                        false, timeout, nil, nil, nil, completionHandler)
 
         guard complete == nil else { return nil }
-        return process(httpResult: result, method: method)
+        return process(httpResult: result, method: method) as? [String : AnyObject]
     }
 
     private func completeURLWithPath(path: String) -> String {
@@ -238,15 +241,15 @@ public final class Firebase {
         return url
     }
 
-    private func process(httpResult: HTTPResult, method: Method) -> [String: AnyObject]? {
+    private func process(httpResult: HTTPResult, method: Method) -> Any? {
         if let error = httpResult.error {
             print(method.rawValue + " Error: " + error.localizedDescription)
             return nil
         }
 
         do {
-            if let jsonMap = try httpResult.contentAsJSONMap() as? [String: AnyObject] {
-                return jsonMap
+            if let json = try httpResult.contentAsJSONMap() {
+                return json
             }
         } catch let e {
             print(method.rawValue + " Error: " + e.localizedDescription)
@@ -255,7 +258,7 @@ public final class Firebase {
     }
 
     private func createCompletionHandler(method: Method,
-                                         callback: (([String: AnyObject]?) -> Void)?) -> ((HTTPResult) -> Void)? {
+                                         callback: ((Any?) -> Void)?) -> ((HTTPResult) -> Void)? {
         if let callback = callback {
             let completionHandler: ((HTTPResult) -> Void)? = { result in
                 callback(self.process(httpResult: result, method: method))

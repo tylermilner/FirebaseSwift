@@ -17,7 +17,7 @@ class FirebaseTests: XCTestCase {
     var key: String!
     var firebase: Firebase!
 
-    let fakeUser = ["id": "123abc"]
+    let fakeUser = ["id": "123abc", "name": "Bob"]
     let patchValue = ["id": "xyz"]
 
     override func setUp() {
@@ -55,6 +55,14 @@ class FirebaseTests: XCTestCase {
         let result = firebase.post(path: "users", value: fakeUser)
         let id = processPostOrPutResponse(result)
         processGetResponse(firebase.get(path: "users/" + id!))
+    }
+
+    func testGetSingleValue() {
+        let result = firebase.post(path: "users", value: fakeUser)
+        let id = processPostOrPutResponse(result)
+        let getResult = firebase.get(path: "users/" + id! + "/name") as? String
+        XCTAssertNotNil(getResult)
+        XCTAssertEqual(getResult, "Bob")
     }
 
     func testGetAsync() {
@@ -108,7 +116,7 @@ class FirebaseTests: XCTestCase {
         let result = firebase.post(path: "users", value: fakeUser)
         processPostOrPutResponse(result)
         firebase.delete(path: "users")
-        let getResult = firebase.get(path: "users")
+        let getResult = firebase.get(path: "users") as? [String: AnyObject]
         XCTAssertNil(getResult)
     }
 
@@ -118,7 +126,7 @@ class FirebaseTests: XCTestCase {
         let deleteExpectation = self.expectation(description: "delete")
         firebase.delete(path: "users") {
             deleteExpectation.fulfill()
-            let getResult = self.firebase.get(path: "users")
+            let getResult = self.firebase.get(path: "users") as? [String: AnyObject]
             XCTAssertNil(getResult)
         }
         self.waitForExpectations(timeout: 30) { error in
