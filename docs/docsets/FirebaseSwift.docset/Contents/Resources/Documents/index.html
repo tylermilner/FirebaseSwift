@@ -52,10 +52,21 @@
 <li><p><a href="https://firebase.google.com/docs/reference/rest/database/">Firebase REST API Documentation</a></p></li>
 </ul>
 <h2 id='swift-package-manager' class='heading'>Swift Package Manager</h2>
-<pre class="highlight swift"><code><span class="o">.</span><span class="kt">Package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/gtchance/FirebaseSwift.git"</span><span class="p">,</span> <span class="nv">majorVersion</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">minor</span><span class="p">:</span> <span class="mi">5</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="o">.</span><span class="kt">Package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/gtchance/FirebaseSwift.git"</span><span class="p">,</span> <span class="nv">majorVersion</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">minor</span><span class="p">:</span> <span class="mi">6</span><span class="p">)</span>
 </code></pre>
 <h2 id='example' class='heading'>Example</h2>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">firebase</span> <span class="o">=</span> <span class="kt">Firebase</span><span class="p">(</span><span class="nv">baseURL</span><span class="p">:</span> <span class="s">"https://myapp.firebaseio.com/"</span><span class="p">,</span> <span class="nv">auth</span><span class="p">:</span> <span class="s">"mytoken"</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">firebase</span> <span class="o">=</span> <span class="kt">Firebase</span><span class="p">(</span>
+<span class="nv">baseURL</span><span class="p">:</span> <span class="s">"https://myapp.firebaseio.com/"</span><span class="p">,</span>
+<span class="nv">accessToken</span><span class="p">:</span> <span class="s">"&lt;MY_GOOGLE_OAUTH2_ACCESS_TOKEN&gt;"</span><span class="p">)</span>
+</code></pre>
+<h5 id='auth' class='heading'>AUTH</h5>
+
+<p>See instructions <a href="https://firebase.google.com/docs/database/rest/auth">here</a> on creating an access token.</p>
+
+<p>If you want to use the deprecated Firebase Database Secret, use the auth property: </p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">firebase</span> <span class="o">=</span> <span class="kt">Firebase</span><span class="p">(</span><span class="nv">baseURL</span><span class="p">:</span> <span class="s">"https://myapp.firebaseio.com/"</span><span class="p">)</span>
+<span class="n">firebase</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="s">"&lt;MY_DATABASE_SECRET&gt;"</span>
+
 </code></pre>
 <h5 id='get' class='heading'>GET</h5>
 <pre class="highlight swift"><code><span class="c1">// sync</span>
@@ -105,10 +116,10 @@
 </code></pre>
 <h5 id='patch' class='heading'>PATCH</h5>
 <pre class="highlight swift"><code><span class="c1">// sync</span>
-<span class="k">let</span> <span class="nv">result</span> <span class="o">=</span> <span class="n">firebase</span><span class="o">.</span><span class="nf">patch</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="s">"user/john_id"</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="p">[</span><span class="s">"middleInitial: "</span><span class="kt">T</span><span class="s">"])
+<span class="k">let</span> <span class="nv">result</span> <span class="o">=</span> <span class="n">firebase</span><span class="o">.</span><span class="nf">patch</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="s">"user/john_id"</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="p">[</span><span class="s">"middleInitial"</span><span class="p">:</span> <span class="s">"T"</span><span class="p">])</span>
 
-// async
-firebase.patch(path: "</span><span class="n">user</span><span class="o">/</span><span class="n">john_id</span><span class="s">", value: ["</span><span class="nv">middleInitial</span><span class="p">:</span> <span class="s">"T"</span><span class="p">])</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
+<span class="c1">// async</span>
+<span class="n">firebase</span><span class="o">.</span><span class="nf">patch</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="s">"user/john_id"</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="p">[</span><span class="s">"middleInitial"</span><span class="p">:</span> <span class="s">"T"</span><span class="p">])</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
   <span class="c1">// ...</span>
 <span class="p">}</span>
 </code></pre>
@@ -119,7 +130,7 @@ firebase.patch(path: "</span><span class="n">user</span><span class="o">/</span>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="" target="_blank" rel="external">Graham\ Chance</a>. All rights reserved. (Last updated: 2017-09-08)</p>
+          <p>&copy; 2017 <a class="link" href="" target="_blank" rel="external">Graham\ Chance</a>. All rights reserved. (Last updated: 2017-09-24)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

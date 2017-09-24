@@ -12,14 +12,13 @@ import Just
 /// This class models an object that can send requests to Firebase, such as POST, GET PATCH and DELETE.
 public final class Firebase {
 
-    /// Legacy Database auth token. It can be the now depricated Firebase Database Secret.
-    // Use the new accessToken instead.
-    // See more details here: https://firebase.google.com/docs/database/rest/auth
-    @available(*, deprecated)
-    public var auth: String?
-
-    // Google OAuth2 access token
+    /// Google OAuth2 access token
     public var accessToken: String?
+
+    /// Legacy Database auth token. You can use the deprecated Firebase Database Secret.
+    /// You should use the new accessToken instead.
+    /// See more details here: https://firebase.google.com/docs/database/rest/auth
+    @available(*, deprecated) public var auth: String?
 
     /// Base URL (e.g. http://myapp.firebaseio.com)
     public let baseURL: String

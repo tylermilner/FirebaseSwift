@@ -8,7 +8,10 @@
 import Foundation
 import Just
 
+
 extension HTTPMethod {
+
+    /// The function in the Just library that corresponds to the http method
     var justRequest: JustSendRequestType {
         switch self {
         case .delete:
