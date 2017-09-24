@@ -44,8 +44,14 @@ private typealias FBSCallback = (Any?) -> Void
 /// This class models an object that can send requests to Firebase, such as POST, GET PATCH and DELETE.
 public final class Firebase {
 
-    /// Database auth token
+    /// Legacy Database auth token. It can be the now depricated Firebase Database Secret.
+    // Use the new accessToken instead.
+    // See more details here: https://firebase.google.com/docs/database/rest/auth
+    @available(*, deprecated)
     public var auth: String?
+
+    // Google OAuth2 access token
+    public var accessToken: String?
 
     /// Base URL (e.g. http://myapp.firebaseio.com)
     public let baseURL: String
@@ -60,8 +66,8 @@ public final class Firebase {
     /// - Parameters:
     ///   - baseURL: Base URL (e.g. http://myapp.firebaseio.com)
     ///   - auth: Database auth token
-    public init(baseURL: String = "", auth: String? = nil) {
-        self.auth = auth
+    public init(baseURL: String = "", accessToken: String? = nil) {
+        self.accessToken = accessToken
 
         var url = baseURL
         if url.characters.last != Character("/") {
@@ -235,7 +241,9 @@ public final class Firebase {
 
     private func completeURLWithPath(path: String) -> String {
         var url = baseURL + path + ".json"
-        if let auth = auth {
+        if let accessToken = accessToken {
+            url += "?access_token=" + accessToken
+        } else if let auth = auth {
             url += "?auth=" + auth
         }
         return url

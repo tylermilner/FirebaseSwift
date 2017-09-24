@@ -10,13 +10,26 @@ FirebaseSwift is intended for server-side Swift and acts as a wrapper around the
 
 ## Swift Package Manager
 ```swift
-.Package(url: "https://github.com/gtchance/FirebaseSwift.git", majorVersion: 1, minor: 5)
+.Package(url: "https://github.com/gtchance/FirebaseSwift.git", majorVersion: 1, minor: 6)
 ```
 
 
 ## Example
 ```swift
-let firebase = Firebase(baseURL: "https://myapp.firebaseio.com/", auth: "mytoken")
+let firebase = Firebase(
+baseURL: "https://myapp.firebaseio.com/",
+accessToken: "<MY_GOOGLE_OAUTH2_ACCESS_TOKEN>")
+```
+
+##### AUTH
+See instructions [here](https://firebase.google.com/docs/database/rest/auth) on creating an access token.
+
+If you want to use the deprecated Firebase Database Secret, use the auth property: 
+
+```swift
+let firebase = Firebase(baseURL: "https://myapp.firebaseio.com/")
+firebase.auth = "<MY_DATABASE_SECRET>"
+
 ```
 
 
@@ -77,10 +90,10 @@ firebase.delete("user/john_id") {
 ##### PATCH
 ```swift
 // sync
-let result = firebase.patch(path: "user/john_id", value: ["middleInitial: "T"])
+let result = firebase.patch(path: "user/john_id", value: ["middleInitial": "T"])
 
 // async
-firebase.patch(path: "user/john_id", value: ["middleInitial: "T"]) { result in
+firebase.patch(path: "user/john_id", value: ["middleInitial": "T"]) { result in
   // ...
 }
 ```

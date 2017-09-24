@@ -26,7 +26,7 @@ class FirebaseTests: XCTestCase {
         print("dict \(dict)")
         url = dict["fb_url"]
         key = dict["fb_secret"]
-        firebase = Firebase(baseURL: url, auth: key)
+        firebase = Firebase(baseURL: url, accessToken: key)
         firebase.delete(path: "")
     }
 
@@ -53,28 +53,31 @@ class FirebaseTests: XCTestCase {
 
     func testGetSync() {
         let result = firebase.post(path: "users", value: fakeUser)
-        let id = processPostOrPutResponse(result)
-        processGetResponse(firebase.get(path: "users/" + id!))
+        if let id = processPostOrPutResponse(result) {
+            processGetResponse(firebase.get(path: "users/" + id))
+        }
     }
 
     func testGetSingleValue() {
         let result = firebase.post(path: "users", value: fakeUser)
-        let id = processPostOrPutResponse(result)
-        let getResult = firebase.get(path: "users/" + id! + "/name") as? String
-        XCTAssertNotNil(getResult)
-        XCTAssertEqual(getResult, "Bob")
+        if let id = processPostOrPutResponse(result) {
+            let getResult = firebase.get(path: "users/" + id + "/name") as? String
+            XCTAssertNotNil(getResult)
+            XCTAssertEqual(getResult, "Bob")
+        }
     }
 
     func testGetAsync() {
         let result = firebase.post(path: "users", value: fakeUser)
-        let id = processPostOrPutResponse(result)
-        let getExpectation = self.expectation(description: "get")
-        self.firebase.get(path: "users/" + id!) { result in
-            getExpectation.fulfill()
-            self.processGetResponse(result)
-        }
-        self.waitForExpectations(timeout: 30) { error in
-            XCTAssertNil(error, "Get Timed Out")
+        if let id = processPostOrPutResponse(result) {
+            let getExpectation = self.expectation(description: "get")
+            self.firebase.get(path: "users/" + id) { result in
+                getExpectation.fulfill()
+                self.processGetResponse(result)
+            }
+            self.waitForExpectations(timeout: 30) { error in
+                XCTAssertNil(error, "Get Timed Out")
+            }
         }
     }
 
