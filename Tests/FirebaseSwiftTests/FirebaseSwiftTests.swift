@@ -26,7 +26,7 @@ class FirebaseTests: XCTestCase {
         print("dict \(dict)")
         url = dict["fb_url"]
         key = dict["fb_secret"]
-        firebase = Firebase(baseURL: url, auth: key)
+        firebase = Firebase(baseURL: url, accessToken: key)
         firebase.delete(path: "")
     }
 
