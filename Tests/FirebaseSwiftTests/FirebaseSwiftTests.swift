@@ -25,7 +25,7 @@ class FirebaseTests: XCTestCase {
         let dict = ProcessInfo.processInfo.environment
         print("dict \(dict)")
         url = dict["fb_url"]
-        key = dict["fb_secret"]
+        key = dict["fb_token"]
         firebase = Firebase(baseURL: url, accessToken: key)
         firebase.delete(path: "")
     }
