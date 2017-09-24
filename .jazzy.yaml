@@ -5,3 +5,8 @@ module: FirebaseSwift
 exclude:
   - Tests/*
   - Dependencies/*
+xcodebuild_arguments:
+    - "-project"
+    - "FirebaseSwift.xcodeproj"
+    - "-scheme"
+    - "FirebaseSwift"

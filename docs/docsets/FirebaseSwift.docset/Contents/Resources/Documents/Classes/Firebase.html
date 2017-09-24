@@ -57,9 +57,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vC13FirebaseSwift8Firebase4authGSqSS_"></a>
-                    <a name="//apple_ref/swift/Property/auth" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC13FirebaseSwift8Firebase4authGSqSS_">auth</a>
+                    <a name="/s:13FirebaseSwift0A0C11accessTokenSSSgv"></a>
+                    <a name="//apple_ref/swift/Property/accessToken" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13FirebaseSwift0A0C11accessTokenSSSgv">accessToken</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -67,14 +67,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Database auth token</p>
+                        <p>Google OAuth2 access token</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">auth</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">accessToken</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -84,9 +84,38 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vC13FirebaseSwift8Firebase7baseURLSS"></a>
+                    <a name="/s:13FirebaseSwift0A0C4authSSSgv"></a>
+                    <a name="//apple_ref/swift/Property/auth" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13FirebaseSwift0A0C4authSSSgv">auth</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Legacy Database auth token. You can use the deprecated Firebase Database Secret.
+You should use the new accessToken instead.
+See more details here: <a href="https://firebase.google.com/docs/database/rest/auth">https://firebase.google.com/docs/database/rest/auth</a></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@available(*, deprecated)</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">auth</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13FirebaseSwift0A0C7baseURLSSv"></a>
                     <a name="//apple_ref/swift/Property/baseURL" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC13FirebaseSwift8Firebase7baseURLSS">baseURL</a>
+                    <a class="token" href="#/s:13FirebaseSwift0A0C7baseURLSSv">baseURL</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -111,9 +140,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vC13FirebaseSwift8Firebase7timeoutSd"></a>
+                    <a name="/s:13FirebaseSwift0A0C7timeoutSdv"></a>
                     <a name="//apple_ref/swift/Property/timeout" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC13FirebaseSwift8Firebase7timeoutSd">timeout</a>
+                    <a class="token" href="#/s:13FirebaseSwift0A0C7timeoutSdv">timeout</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -138,9 +167,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC13FirebaseSwift8FirebasecFT7baseURLSS4authGSqSS__S0_"></a>
-                    <a name="//apple_ref/swift/Method/init(baseURL:auth:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC13FirebaseSwift8FirebasecFT7baseURLSS4authGSqSS__S0_">init(baseURL:auth:)</a>
+                    <a name="/s:13FirebaseSwift0A0CACSS7baseURL_SSSg11accessTokentcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(baseURL:accessToken:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13FirebaseSwift0A0CACSS7baseURL_SSSg11accessTokentcfc">init(baseURL:accessToken:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -155,7 +184,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">baseURL</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">""</span><span class="p">,</span> <span class="nv">auth</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">baseURL</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">""</span><span class="p">,</span> <span class="nv">accessToken</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -196,9 +225,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC13FirebaseSwift8Firebase8setValueFT4pathSS5valueP__GSqGVs10DictionarySSPs9AnyObject___"></a>
+                    <a name="/s:13FirebaseSwift0A0C8setValues10DictionaryVySSyXlGSgSS4path_yp5valuetF"></a>
                     <a name="//apple_ref/swift/Method/setValue(path:value:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC13FirebaseSwift8Firebase8setValueFT4pathSS5valueP__GSqGVs10DictionarySSPs9AnyObject___">setValue(path:value:)</a>
+                    <a class="token" href="#/s:13FirebaseSwift0A0C8setValues10DictionaryVySSyXlGSgSS4path_yp5valuetF">setValue(path:value:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -258,9 +287,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC13FirebaseSwift8Firebase8setValueFT4pathSS5valueP_15asyncCompletionFGSqGVs10DictionarySSPs9AnyObject___T__T_"></a>
+                    <a name="/s:13FirebaseSwift0A0C8setValueySS4path_yp5valueys10DictionaryVySSyXlGSgc15asyncCompletiontF"></a>
                     <a name="//apple_ref/swift/Method/setValue(path:value:asyncCompletion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC13FirebaseSwift8Firebase8setValueFT4pathSS5valueP_15asyncCompletionFGSqGVs10DictionarySSPs9AnyObject___T__T_">setValue(path:value:asyncCompletion:)</a>
+                    <a class="token" href="#/s:13FirebaseSwift0A0C8setValueySS4path_yp5valueys10DictionaryVySSyXlGSgc15asyncCompletiontF">setValue(path:value:asyncCompletion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -330,9 +359,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC13FirebaseSwift8Firebase4postFT4pathSS5valueP__GSqGVs10DictionarySSPs9AnyObject___"></a>
+                    <a name="/s:13FirebaseSwift0A0C4posts10DictionaryVySSyXlGSgSS4path_yp5valuetF"></a>
                     <a name="//apple_ref/swift/Method/post(path:value:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC13FirebaseSwift8Firebase4postFT4pathSS5valueP__GSqGVs10DictionarySSPs9AnyObject___">post(path:value:)</a>
+                    <a class="token" href="#/s:13FirebaseSwift0A0C4posts10DictionaryVySSyXlGSgSS4path_yp5valuetF">post(path:value:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -392,9 +421,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC13FirebaseSwift8Firebase4postFT4pathSS5valueP_15asyncCompletionFGSqGVs10DictionarySSPs9AnyObject___T__T_"></a>
+                    <a name="/s:13FirebaseSwift0A0C4postySS4path_yp5valueys10DictionaryVySSyXlGSgc15asyncCompletiontF"></a>
                     <a name="//apple_ref/swift/Method/post(path:value:asyncCompletion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC13FirebaseSwift8Firebase4postFT4pathSS5valueP_15asyncCompletionFGSqGVs10DictionarySSPs9AnyObject___T__T_">post(path:value:asyncCompletion:)</a>
+                    <a class="token" href="#/s:13FirebaseSwift0A0C4postySS4path_yp5valueys10DictionaryVySSyXlGSgc15asyncCompletiontF">post(path:value:asyncCompletion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -464,9 +493,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC13FirebaseSwift8Firebase3putFT4pathSS5valueP__GSqGVs10DictionarySSPs9AnyObject___"></a>
+                    <a name="/s:13FirebaseSwift0A0C3puts10DictionaryVySSyXlGSgSS4path_yp5valuetF"></a>
                     <a name="//apple_ref/swift/Method/put(path:value:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC13FirebaseSwift8Firebase3putFT4pathSS5valueP__GSqGVs10DictionarySSPs9AnyObject___">put(path:value:)</a>
+                    <a class="token" href="#/s:13FirebaseSwift0A0C3puts10DictionaryVySSyXlGSgSS4path_yp5valuetF">put(path:value:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -526,9 +555,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC13FirebaseSwift8Firebase3putFT4pathSS5valueP_15asyncCompletionFGSqGVs10DictionarySSPs9AnyObject___T__T_"></a>
+                    <a name="/s:13FirebaseSwift0A0C3putySS4path_yp5valueys10DictionaryVySSyXlGSgc15asyncCompletiontF"></a>
                     <a name="//apple_ref/swift/Method/put(path:value:asyncCompletion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC13FirebaseSwift8Firebase3putFT4pathSS5valueP_15asyncCompletionFGSqGVs10DictionarySSPs9AnyObject___T__T_">put(path:value:asyncCompletion:)</a>
+                    <a class="token" href="#/s:13FirebaseSwift0A0C3putySS4path_yp5valueys10DictionaryVySSyXlGSgc15asyncCompletiontF">put(path:value:asyncCompletion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -598,9 +627,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC13FirebaseSwift8Firebase5patchFT4pathSS5valueP__GSqGVs10DictionarySSPs9AnyObject___"></a>
+                    <a name="/s:13FirebaseSwift0A0C5patchs10DictionaryVySSyXlGSgSS4path_yp5valuetF"></a>
                     <a name="//apple_ref/swift/Method/patch(path:value:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC13FirebaseSwift8Firebase5patchFT4pathSS5valueP__GSqGVs10DictionarySSPs9AnyObject___">patch(path:value:)</a>
+                    <a class="token" href="#/s:13FirebaseSwift0A0C5patchs10DictionaryVySSyXlGSgSS4path_yp5valuetF">patch(path:value:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -660,9 +689,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC13FirebaseSwift8Firebase5patchFT4pathSS5valueP_15asyncCompletionFGSqGVs10DictionarySSPs9AnyObject___T__T_"></a>
+                    <a name="/s:13FirebaseSwift0A0C5patchySS4path_yp5valueys10DictionaryVySSyXlGSgc15asyncCompletiontF"></a>
                     <a name="//apple_ref/swift/Method/patch(path:value:asyncCompletion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC13FirebaseSwift8Firebase5patchFT4pathSS5valueP_15asyncCompletionFGSqGVs10DictionarySSPs9AnyObject___T__T_">patch(path:value:asyncCompletion:)</a>
+                    <a class="token" href="#/s:13FirebaseSwift0A0C5patchySS4path_yp5valueys10DictionaryVySSyXlGSgc15asyncCompletiontF">patch(path:value:asyncCompletion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -732,9 +761,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC13FirebaseSwift8Firebase6deleteFT4pathSS_T_"></a>
+                    <a name="/s:13FirebaseSwift0A0C6deleteySS4path_tF"></a>
                     <a name="//apple_ref/swift/Method/delete(path:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC13FirebaseSwift8Firebase6deleteFT4pathSS_T_">delete(path:)</a>
+                    <a class="token" href="#/s:13FirebaseSwift0A0C6deleteySS4path_tF">delete(path:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -778,9 +807,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC13FirebaseSwift8Firebase6deleteFT4pathSS15asyncCompletionFT_T__T_"></a>
+                    <a name="/s:13FirebaseSwift0A0C6deleteySS4path_yyc15asyncCompletiontF"></a>
                     <a name="//apple_ref/swift/Method/delete(path:asyncCompletion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC13FirebaseSwift8Firebase6deleteFT4pathSS15asyncCompletionFT_T__T_">delete(path:asyncCompletion:)</a>
+                    <a class="token" href="#/s:13FirebaseSwift0A0C6deleteySS4path_yyc15asyncCompletiontF">delete(path:asyncCompletion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -837,9 +866,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC13FirebaseSwift8Firebase3getFT4pathSS_GSqP__"></a>
+                    <a name="/s:13FirebaseSwift0A0C3getypSgSS4path_tF"></a>
                     <a name="//apple_ref/swift/Method/get(path:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC13FirebaseSwift8Firebase3getFT4pathSS_GSqP__">get(path:)</a>
+                    <a class="token" href="#/s:13FirebaseSwift0A0C3getypSgSS4path_tF">get(path:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -887,9 +916,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC13FirebaseSwift8Firebase3getFT4pathSS15asyncCompletionFGSqP__T__T_"></a>
+                    <a name="/s:13FirebaseSwift0A0C3getySS4path_yypSgc15asyncCompletiontF"></a>
                     <a name="//apple_ref/swift/Method/get(path:asyncCompletion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC13FirebaseSwift8Firebase3getFT4pathSS15asyncCompletionFGSqP__T__T_">get(path:asyncCompletion:)</a>
+                    <a class="token" href="#/s:13FirebaseSwift0A0C3getySS4path_yypSgc15asyncCompletiontF">get(path:asyncCompletion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -948,7 +977,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="" target="_blank" rel="external">Graham\ Chance</a>. All rights reserved. (Last updated: 2017-09-08)</p>
+          <p>&copy; 2017 <a class="link" href="" target="_blank" rel="external">Graham\ Chance</a>. All rights reserved. (Last updated: 2017-09-24)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

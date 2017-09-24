@@ -9,49 +9,16 @@
 import Foundation
 import Just
 
-private enum Method: String {
-    case delete = "DELETE"
-    case post = "POST"
-    case get = "GET"
-    case patch = "PATCH"
-    case put = "PUT"
-
-    fileprivate var justMethod: JustSendRequestMethodType {
-        switch self {
-        case .delete:
-            return Just.delete
-        case .get:
-            return Just.get
-        case .patch:
-            return Just.patch
-        case .post:
-            return Just.post
-        case .put:
-            return Just.put
-        }
-    }
-}
-
-// The type of all the Just package's methods (get, post, delete,...)
-private typealias JustSendRequestMethodType =
-    (URLComponentsConvertible, [String: Any], [String: Any],
-    Any?, [String: String], [String: HTTPFile], (String, String)?,
-    [String: String], Bool, Double?, String?, Data?,
-    (TaskProgressHandler)?, ((HTTPResult) -> Void)?) -> HTTPResult
-
-private typealias FBSCallback = (Any?) -> Void
-
 /// This class models an object that can send requests to Firebase, such as POST, GET PATCH and DELETE.
 public final class Firebase {
 
-    /// Legacy Database auth token. It can be the now depricated Firebase Database Secret.
-    // Use the new accessToken instead.
-    // See more details here: https://firebase.google.com/docs/database/rest/auth
-    @available(*, deprecated)
-    public var auth: String?
-
-    // Google OAuth2 access token
+    /// Google OAuth2 access token
     public var accessToken: String?
+
+    /// Legacy Database auth token. You can use the deprecated Firebase Database Secret.
+    /// You should use the new accessToken instead.
+    /// See more details here: https://firebase.google.com/docs/database/rest/auth
+    @available(*, deprecated) public var auth: String?
 
     /// Base URL (e.g. http://myapp.firebaseio.com)
     public let baseURL: String
@@ -169,7 +136,7 @@ public final class Firebase {
     /// - Parameter path: path to append to the base url
     public func delete(path: String) {
         let url = completeURLWithPath(path: path)
-        _ = Method.delete.justMethod(url, [:], [:], nil, headers, [:], nil, [:],
+        _ = HTTPMethod.delete.justRequest(url, [:], [:], nil, headers, [:], nil, [:],
                                      false, timeout, nil, nil, nil, nil)
     }
 
@@ -181,7 +148,7 @@ public final class Firebase {
     public func delete(path: String,
                        asyncCompletion: @escaping () -> Void) {
         let url = completeURLWithPath(path: path)
-        _ = Method.delete.justMethod(url, [:], [:], nil, headers, [:], nil, [:],
+        _ = HTTPMethod.delete.justRequest(url, [:], [:], nil, headers, [:], nil, [:],
                                      false, timeout, nil, nil, nil) { _ in
                                         asyncCompletion()
         }
@@ -212,7 +179,7 @@ public final class Firebase {
         let url = completeURLWithPath(path: path)
         let completionHandler = createCompletionHandler(method: .get, callback: complete)
 
-        let httpResult = Method.get.justMethod(url, [:], [:], nil, headers, [:], nil, [:],
+        let httpResult = HTTPMethod.get.justRequest(url, [:], [:], nil, headers, [:], nil, [:],
                                                false, timeout, nil, nil, nil, completionHandler)
 
         guard complete == nil else { return nil }
@@ -222,7 +189,7 @@ public final class Firebase {
     @discardableResult
     private func write(value: Any,
                        path: String,
-                       method: Method,
+                       method: HTTPMethod,
                        complete: (([String: AnyObject]?) -> Void)? = nil) -> [String: AnyObject]? {
 
         let url = completeURLWithPath(path: path)
@@ -232,7 +199,7 @@ public final class Firebase {
             complete?(result as? [String: AnyObject])
         }
         let completionHandler = createCompletionHandler(method: method, callback: callback)
-        let result = method.justMethod(url, [:], [:], json, headers, [:], nil, [:],
+        let result = method.justRequest(url, [:], [:], json, headers, [:], nil, [:],
                                        false, timeout, nil, nil, nil, completionHandler)
 
         guard complete == nil else { return nil }
@@ -249,7 +216,7 @@ public final class Firebase {
         return url
     }
 
-    private func process(httpResult: HTTPResult, method: Method) -> Any? {
+    private func process(httpResult: HTTPResult, method: HTTPMethod) -> Any? {
         if let error = httpResult.error {
             print(method.rawValue + " Error: " + error.localizedDescription)
             return nil
@@ -265,7 +232,7 @@ public final class Firebase {
         return nil
     }
 
-    private func createCompletionHandler(method: Method,
+    private func createCompletionHandler(method: HTTPMethod,
                                          callback: ((Any?) -> Void)?) -> ((HTTPResult) -> Void)? {
         if let callback = callback {
             let completionHandler: ((HTTPResult) -> Void)? = { result in
