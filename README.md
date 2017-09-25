@@ -27,6 +27,7 @@ See instructions [here](https://firebase.google.com/docs/database/rest/auth) on 
 If you want to use the deprecated Firebase Database Secret, use the auth property: 
 
 ```swift
+// Deprecated by Firebase. Use access token in the main example instead.
 let firebase = Firebase(baseURL: "https://myapp.firebaseio.com/")
 firebase.auth = "<MY_DATABASE_SECRET>"
 
