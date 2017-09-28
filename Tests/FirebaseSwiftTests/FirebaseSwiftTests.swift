@@ -129,8 +129,9 @@ class FirebaseTests: XCTestCase {
         let deleteExpectation = self.expectation(description: "delete")
         firebase.delete(path: "users") {
             deleteExpectation.fulfill()
-            let getResult = self.firebase.get(path: "users") as? [String: AnyObject]
-            XCTAssertNil(getResult)
+            self.firebase.get(path: "users") {
+                XCTAssertNil($0 as? [String: AnyObject])
+            }
         }
         self.waitForExpectations(timeout: 30) { error in
             XCTAssertNil(error, "Post/Delete Timed Out")

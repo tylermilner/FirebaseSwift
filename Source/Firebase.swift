@@ -217,19 +217,27 @@ public final class Firebase {
     }
 
     private func process(httpResult: HTTPResult, method: HTTPMethod) -> Any? {
-        if let error = httpResult.error {
-            print(method.rawValue + " Error: " + error.localizedDescription)
+        if let e = httpResult.error {
+            print("ERROR FirebaseSwift-\(method.rawValue) message: \(e.localizedDescription)")
+            return nil
+        }
+
+        guard httpResult.content != nil else {
+            print("ERROR FirebaseSwift-\(method.rawValue) message: No content in http response.")
             return nil
         }
 
         do {
             if let json = try httpResult.contentAsJSONMap() {
                 return json
+            } else {
+                print("ERROR FirebaseSwift-\(method.rawValue) message: Failed to parse json response. Status code: \(String(describing: httpResult.statusCode))")
+                return nil
             }
         } catch let e {
-            print(method.rawValue + " Error: " + e.localizedDescription)
+            print("ERROR FirebaseSwift-\(method.rawValue) message: \(e.localizedDescription)")
+            return nil
         }
-        return nil
     }
 
     private func createCompletionHandler(method: HTTPMethod,
