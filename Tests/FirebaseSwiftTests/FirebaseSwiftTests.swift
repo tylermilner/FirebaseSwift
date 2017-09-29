@@ -164,13 +164,17 @@ class FirebaseTests: XCTestCase {
     func processGetResponse(_ result: Any?) {
         let getResultID = result as? [String: String]
         XCTAssertNotNil(getResultID)
-        XCTAssertEqual(getResultID!, self.fakeUser)
+        if let getResultID = getResultID {
+            XCTAssertEqual(getResultID, self.fakeUser)
+        }
     }
 
     func processPatchResponse(_ result: [String: AnyObject]?) {
         let patchResult = result as? [String: String]
         XCTAssertNotNil(patchResult)
-        XCTAssertEqual(patchValue, patchResult!)
+        if let patchResult = patchResult {
+            XCTAssertEqual(patchValue, patchResult)
+        }
     }
 
 }
