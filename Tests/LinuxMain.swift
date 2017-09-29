@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import FirebaseTests
+@testable import FirebaseSwiftTests
 
 XCTMain([
     testCase(FirebaseTests.allTests),
