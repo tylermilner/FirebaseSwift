@@ -49,7 +49,7 @@ public final class Firebase {
     ///   - path: path to append to base url
     ///   - value: data to set
     /// - Returns: value of set data if successful
-    public func setValue(path: String, value: Any) -> [String: AnyObject]? {
+    public func setValue(path: String, value: Any) -> [String: Any]? {
         return put(path: path, value:  value)
     }
 
@@ -61,7 +61,7 @@ public final class Firebase {
     ///   - asyncCompletion: called on completion with the value of set data if successful.
     public func setValue(path: String,
                          value: Any,
-                         asyncCompletion: @escaping ([String: AnyObject]?) -> Void) {
+                         asyncCompletion: @escaping ([String: Any]?) -> Void) {
         put(path: path, value:  value, asyncCompletion: asyncCompletion)
     }
 
@@ -71,7 +71,7 @@ public final class Firebase {
     ///   - path: path to append to the base url
     ///   - value: data to post
     /// - Returns: value of posted data if successful
-    public func post(path: String, value: Any) -> [String: AnyObject]? {
+    public func post(path: String, value: Any) -> [String: Any]? {
         return write(value: value, path: path, method: .post, complete: nil)
     }
 
@@ -83,7 +83,7 @@ public final class Firebase {
     ///   - asyncCompletion: called on completion with the value of posted data if successful.
     public func post(path: String,
                      value: Any,
-                     asyncCompletion: @escaping ([String: AnyObject]?) -> Void) {
+                     asyncCompletion: @escaping ([String: Any]?) -> Void) {
         write(value: value, path: path, method: .post, complete: asyncCompletion)
     }
 
@@ -93,7 +93,7 @@ public final class Firebase {
     ///   - path: path to append to the base url
     ///   - value: data to put
     /// - Returns: Value of put data if successful
-    public func put(path: String, value: Any) -> [String: AnyObject]? {
+    public func put(path: String, value: Any) -> [String: Any]? {
         return write(value: value, path: path, method: .put, complete: nil)
     }
 
@@ -105,7 +105,7 @@ public final class Firebase {
     ///   - asyncCompletion: called on completion with the value of put data if successful.
     public func put(path: String,
                     value: Any,
-                    asyncCompletion: @escaping ([String: AnyObject]?) -> Void) {
+                    asyncCompletion: @escaping ([String: Any]?) -> Void) {
         write(value: value, path: path, method: .put, complete: asyncCompletion)
     }
 
@@ -115,7 +115,7 @@ public final class Firebase {
     ///   - path: path to append to the base url
     ///   - value: data to patch
     /// - Returns: value of patched data if successful
-    public func patch(path: String, value: Any) -> [String: AnyObject]? {
+    public func patch(path: String, value: Any) -> [String: Any]? {
         return write(value: value, path: path, method: .patch, complete: nil)
     }
 
@@ -127,7 +127,7 @@ public final class Firebase {
     ///   - asyncCompletion: called on completion with the value of patched data if successful.
     public func patch(path: String,
                       value: Any,
-                      asyncCompletion: @escaping ([String: AnyObject]?) -> Void) {
+                      asyncCompletion: @escaping ([String: Any]?) -> Void) {
         write(value: value, path: path, method: .patch, complete: asyncCompletion)
     }
 
@@ -190,20 +190,20 @@ public final class Firebase {
     private func write(value: Any,
                        path: String,
                        method: HTTPMethod,
-                       complete: (([String: AnyObject]?) -> Void)? = nil) -> [String: AnyObject]? {
+                       complete: (([String: Any]?) -> Void)? = nil) -> [String: Any]? {
 
         let url = completeURLWithPath(path: path)
         let json: Any? = JSONSerialization.isValidJSONObject(value) ? value : [".value": value]
 
         let callback: ((Any?) -> Void)? = complete == nil ? nil : { result in
-            complete?(result as? [String: AnyObject])
+            complete?(result as? [String: Any])
         }
         let completionHandler = createCompletionHandler(method: method, callback: callback)
         let result = method.justRequest(url, [:], [:], json, headers, [:], nil, [:],
                                        false, timeout, nil, nil, nil, completionHandler)
 
         guard complete == nil else { return nil }
-        return process(httpResult: result, method: method) as? [String : AnyObject]
+        return process(httpResult: result, method: method) as? [String : Any]
     }
 
     private func completeURLWithPath(path: String) -> String {

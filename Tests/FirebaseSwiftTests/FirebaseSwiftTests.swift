@@ -134,7 +134,7 @@ class FirebaseTests: XCTestCase {
         let result = firebase.post(path: "users", value: fakeUser)
         processPostOrPutResponse(result)
         firebase.delete(path: "users")
-        let getResult = firebase.get(path: "users") as? [String: AnyObject]
+        let getResult = firebase.get(path: "users") as? [String: Any]
         XCTAssertNil(getResult)
     }
 
@@ -145,7 +145,7 @@ class FirebaseTests: XCTestCase {
         firebase.delete(path: "users") {
             deleteExpectation.fulfill()
             self.firebase.get(path: "users") {
-                XCTAssertNil($0 as? [String: AnyObject])
+                XCTAssertNil($0 as? [String: Any])
             }
         }
         self.waitForExpectations(timeout: 30) { error in
@@ -154,7 +154,7 @@ class FirebaseTests: XCTestCase {
     }
 
     @discardableResult
-    private func processPostOrPutResponse(_ result: [String: AnyObject]?) -> String? {
+    private func processPostOrPutResponse(_ result: [String: Any]?) -> String? {
         XCTAssertNotNil(result)
         let id = result?["name"] as? String
         XCTAssertNotNil(id)
@@ -169,7 +169,7 @@ class FirebaseTests: XCTestCase {
         }
     }
 
-    func processPatchResponse(_ result: [String: AnyObject]?) {
+    func processPatchResponse(_ result: [String: Any]?) {
         let patchResult = result as? [String: String]
         XCTAssertNotNil(patchResult)
         if let patchResult = patchResult {
