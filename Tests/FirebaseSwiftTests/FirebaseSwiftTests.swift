@@ -13,6 +13,21 @@ import XCTest
 
 class FirebaseTests: XCTestCase {
 
+    static var allTests = [
+        ("testPostSync", testPostSync),
+        ("testPostAsync", testPostAsync),
+        ("testGetSync", testGetSync),
+        ("testGetSingleValue", testGetSingleValue),
+        ("testGetAsync", testGetAsync),
+        ("testPutSync", testPutSync),
+        ("testPutAsync", testPutAsync),
+        ("testPatchSync", testPatchSync),
+        ("testPatchAsync", testPatchAsync),
+        ("testDeleteSync", testDeleteSync),
+        ("testDeleteAsync", testDeleteAsync),
+        ("testGetAsync", testGetAsync),
+        ]
+
     var url: String!
     var key: String!
     var firebase: Firebase!
