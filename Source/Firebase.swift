@@ -227,15 +227,10 @@ public final class Firebase {
             return nil
         }
 
-        do {
-            if let json = try httpResult.contentAsJSONMap() {
-                return json
-            } else {
-                print("ERROR FirebaseSwift-\(method.rawValue) message: Failed to parse json response. Status code: \(String(describing: httpResult.statusCode))")
-                return nil
-            }
-        } catch let e {
-            print("ERROR FirebaseSwift-\(method.rawValue) message: \(e.localizedDescription)")
+        if let json = httpResult.contentAsJSONMap() {
+            return json
+        } else {
+            print("ERROR FirebaseSwift-\(method.rawValue) message: Failed to parse json response. Status code: \(String(describing: httpResult.statusCode))")
             return nil
         }
     }
