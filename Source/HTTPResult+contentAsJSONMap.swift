@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 import Just
 
 extension HTTPResult {
@@ -17,7 +16,7 @@ extension HTTPResult {
     /// - Returns: A json object
     func contentAsJSONMap() -> Any? {
         if let data = content {
-            return JSON(data: data).object
+            return try? JSONSerialization.jsonObject(with: data, options: [.allowFragments])
         }
         return nil
     }
