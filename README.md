@@ -1,5 +1,5 @@
 # FirebaseSwift
-[![Build Status](https://api.travis-ci.org/gtchance/FirebaseSwift.svg?branch=master)](https://travis-ci.org/gtchance/FirebaseSwift) [![Language](https://img.shields.io/badge/language-Swift%203.1-orange.svg)](https://swift.org) ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
+[![Build Status](https://api.travis-ci.org/gtchance/FirebaseSwift.svg?branch=master)](https://travis-ci.org/gtchance/FirebaseSwift) [![Language](https://img.shields.io/badge/language-Swift%204.0-orange.svg)](https://swift.org) ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
 
 FirebaseSwift is intended for server-side Swift and acts as a wrapper around the Firebase REST api. Options for both synchronous and asynchronous calls.
 
@@ -23,6 +23,7 @@ accessToken: "<MY_GOOGLE_OAUTH2_ACCESS_TOKEN>")
 
 ##### AUTH
 See instructions [here](https://firebase.google.com/docs/database/rest/auth) on creating an access token.
+You cannot currently create an access token with this library, but you can use an access token you've created elsewhere or use the depricated Database Secret (see below on using a secret instead of an access token)
 
 If you want to use the deprecated Firebase Database Secret, use the auth property: 
 
