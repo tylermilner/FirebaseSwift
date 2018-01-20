@@ -10,7 +10,7 @@ FirebaseSwift is intended for server-side Swift and acts as a wrapper around the
 
 ## Swift Package Manager
 ```swift
-.Package(url: "https://github.com/gtchance/FirebaseSwift.git", majorVersion: 1, minor: 6)
+.package(url: "https://github.com/gtchance/FirebaseSwift.git", .upToNextMajor(from: "1.6"))
 ```
 
 
