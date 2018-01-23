@@ -5,9 +5,9 @@
         "package": "Just",
         "repositoryURL": "https://github.com/tylermilner/Just.git",
         "state": {
-          "branch": "master",
+          "branch": null,
           "revision": "9c13bd2cc7c4cc09719a7246847a9459cb45aaf2",
-          "version": null
+          "version": "0.6.1"
         }
       }
     ]
