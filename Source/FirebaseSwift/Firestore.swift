@@ -11,6 +11,8 @@ import Just
 /// This class models an object that can send requests to a Firebase Cloud Firestore database, such as POST, GET PATCH and DELETE.
 public final class Firestore {
     
+    // MARK: - Properties
+    
     /// Google OAuth2 access token
     public var accessToken: String?
     
@@ -32,6 +34,8 @@ public final class Firestore {
                 "Authorization": "Bearer \(accessToken ?? "")"]
     }
     
+    // MARK: - Init
+    
     /// Constructor
     ///
     /// - Parameters:
@@ -48,6 +52,8 @@ public final class Firestore {
         }
         self.baseURL = url
     }
+    
+    // MARK: - Write
     
     /// Performs a synchronous PUT at base url plus given path.
     ///
@@ -115,6 +121,8 @@ public final class Firestore {
         write(value: value, path: path, method: .put, complete: asyncCompletion)
     }
     
+    // MARK: - Update
+    
     /// Performs a synchronous PATCH at given path from the base url.
     ///
     /// - Parameters:
@@ -136,6 +144,8 @@ public final class Firestore {
                       asyncCompletion: @escaping ([String: Any]?) -> Void) {
         write(value: value, path: path, method: .patch, complete: asyncCompletion)
     }
+    
+    // MARK: - Delete
     
     /// Performs a synchronous DELETE at given path from the base url.
     ///
@@ -160,6 +170,8 @@ public final class Firestore {
         }
     }
     
+    // MARK: - Get
+    
     /// Performs a synchronous GET at given path from the base url.
     ///
     /// - Parameters:
@@ -178,6 +190,8 @@ public final class Firestore {
                     asyncCompletion: @escaping ((Any?) -> Void)) {
         get(path: path, complete: asyncCompletion)
     }
+    
+    // MARK: - Private
     
     @discardableResult
     private func get(path: String, complete: ((Any?) -> Void)?) -> Any? {
