@@ -17,6 +17,12 @@ public final class Firestore {
     /// Base URL (e.g. https://firestore.googleapis.com/v1beta1/)
     public let baseURL: String
     
+    /// The Firebase project identifier (e.g. project-3607d)
+    private let projectId: String
+    
+    /// The Firestore database identifier (e.g. usually "(default)" for now)
+    private let databaseId: String
+    
     /// Timeout of http operations
     public var timeout: Double = 30.0 // seconds
     
@@ -28,8 +34,10 @@ public final class Firestore {
     /// - Parameters:
     ///   - baseURL: Base URL (e.g. https://firestore.googleapis.com/v1beta1/)
     ///   - auth: Database auth token
-    public init(baseURL: String = "", accessToken: String? = nil) {
+    public init(baseURL: String = "", accessToken: String? = nil, projectId: String = "", databaseId: String = "(default)") {
         self.accessToken = accessToken
+        self.projectId = projectId
+        self.databaseId = databaseId
         
         var url = baseURL
         if url.last != Character("/") {
@@ -202,18 +210,10 @@ public final class Firestore {
     }
     
     private func completeURLWithPath(path: String) -> String {
+        // TODO: Replace old logic that was here. This was adding the authentication as a query parameter on the URL. Firestore will need it as an Authorization header.
         
-        // TODO: Fix the logic in here. Is it even necessary to decorate the URL?
-        
-//        var url = baseURL + path + ".json"
-//        if let accessToken = accessToken {
-//            url += "?access_token=" + accessToken
-//        } else if let auth = auth {
-//            url += "?auth=" + auth
-//        }
-//        return url
-        
-        return baseURL
+        // In the form: https://firestore.googleapis.com/v1beta1/projects/YOUR_PROJECT_ID/databases/(default)/documents/<collection>/<item>
+        return baseURL + "projects/\(projectId)/" + "databases/\(databaseId)/" + path
     }
     
     private func process(httpResult: HTTPResult, method: HTTPMethod) -> Any? {
