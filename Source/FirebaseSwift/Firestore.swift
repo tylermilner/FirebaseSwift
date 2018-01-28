@@ -15,7 +15,7 @@ public final class Firestore {
     public var accessToken: String?
     
     /// Base URL (e.g. https://firestore.googleapis.com/v1beta1/)
-    public let baseURL: String
+    private let baseURL: String
     
     /// The Firebase project identifier (e.g. project-3607d)
     private let projectId: String
@@ -26,8 +26,11 @@ public final class Firestore {
     /// Timeout of http operations
     public var timeout: Double = 30.0 // seconds
     
-    private let headers = ["Accept": "application/json"]
-    
+    /// The default headers to send with every request
+    private var headers: [String: String] {
+        return ["Accept": "application/json",
+                "Authorization": "Bearer \(accessToken ?? "")"]
+    }
     
     /// Constructor
     ///
@@ -210,9 +213,7 @@ public final class Firestore {
     }
     
     private func completeURLWithPath(path: String) -> String {
-        // TODO: Replace old logic that was here. This was adding the authentication as a query parameter on the URL. Firestore will need it as an Authorization header.
-        
-        // In the form: https://firestore.googleapis.com/v1beta1/projects/YOUR_PROJECT_ID/databases/(default)/documents/<collection>/<item>
+        // In the form https://firestore.googleapis.com/v1beta1/projects/PROJECT_ID/databases/(default)/documents/COLLECTION_ID/DOCUMENT_ID
         return baseURL + "projects/\(projectId)/" + "databases/\(databaseId)/" + path
     }
     
